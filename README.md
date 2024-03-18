@@ -10,4 +10,4 @@ Diferenta intre un utilizator obisnuit si un administrator consta in faptul ca a
 
 
 
-Tehnologii folosite: React, Node.js, MongoDB, TypeScript
+Tehnologii folosite: React, Node.js, Express.js, MongoDB
