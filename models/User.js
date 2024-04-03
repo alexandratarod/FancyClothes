@@ -1,11 +1,7 @@
 const mongoose = require("mongoose");
 
 const ReviewSchema = mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: "User",
-  },
+  userId: { type: String, required: true },
   title: {
     type: String,
     required: true,
@@ -51,8 +47,7 @@ const UserSchema = new mongoose.Schema(
 //   Review: mongoose.model("Review", ReviewSchema),
 // };
 
-// module.exports = 
+// module.exports =
 //    mongoose.model("Review", UserSchema)
 
-module.exports = 
-   mongoose.model("User", UserSchema)
+module.exports = mongoose.model("User", UserSchema);
