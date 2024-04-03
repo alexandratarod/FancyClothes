@@ -46,7 +46,13 @@ const UserSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = {
-  User: mongoose.model("User", UserSchema),
-  Review: mongoose.model("Review", ReviewSchema),
-};
+// module.exports = {
+//   User: mongoose.model("User", UserSchema),
+//   Review: mongoose.model("Review", ReviewSchema),
+// };
+
+// module.exports = 
+//    mongoose.model("Review", UserSchema)
+
+module.exports = 
+   mongoose.model("User", UserSchema)
