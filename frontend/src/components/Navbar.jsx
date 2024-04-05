@@ -2,6 +2,9 @@ import { Badge } from "@material-ui/core";
 import { Search, ShoppingCartOutlined } from "@material-ui/icons";
 import React from "react";
 import styled from "styled-components";
+import { NavLink } from "react-router-dom";
+
+
 
 
 const Container = styled.div`
@@ -27,11 +30,11 @@ const SearchContainer = styled.div`
   align-items: center;
   margin-left: 30px;
   padding: 8px;
-  width: 300px;
+  width: 350px;
 `;
 
 const Input = styled.input`
-  width: 300px;
+  width: 350px;
   border: none;
 `;
 
@@ -67,7 +70,9 @@ const Navbar = () => {
     <Container>
       <Wrapper>
         <Left>
+        <NavLink to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
         <Logo>FANCY CLOTHES</Logo>
+        </NavLink>
         </Left>
         <Center>
         <SearchContainer>
@@ -76,12 +81,16 @@ const Navbar = () => {
           </SearchContainer>
         </Center>
         <Right>
-          <MenuItem>SIGN IN</MenuItem>
+        <NavLink to="/login" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <MenuItem>SIGN IN</MenuItem>
+        </NavLink>
+        <NavLink to="/cart" style={{ textDecoration: 'none', color: 'inherit' }}>
           <MenuItem>
             <Badge badgeContent={4} color="primary">
               <ShoppingCartOutlined />
             </Badge>
           </MenuItem>
+          </NavLink>
         </Right>
       </Wrapper>
     </Container>
