@@ -10,13 +10,16 @@ const productRoute = require("./routes/product");
 const cartRoute = require("./routes/cart");
 const orderRoute = require("./routes/order");
 
+const cors = require("cors");
+
+app.use(cors()); 
 
 dotenv.config();
 
-// Setează calea către directorul principal al proiectului
+
 const rootDir = path.resolve(__dirname, "..");
 
-// Utilizează calea pentru a accesa fișierul .env
+
 dotenv.config({ path: path.join(rootDir, ".env") });
 
 mongoose
@@ -32,6 +35,8 @@ mongoose
   app.use("/products", productRoute);
   app.use("/cart", cartRoute);
   app.use("/orders", orderRoute);
+
+
 
 app.listen(process.env.PORT || 3000, () => {
   console.log("Backend server is running!");

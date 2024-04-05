@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Cart from './pages/Cart';
 import Register from './pages/Register';
 import Navbar from './components/Navbar';
+import Products from './pages/Products';
 
 
 const AppRouter = () => {
@@ -13,9 +14,10 @@ const AppRouter = () => {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/auth/login" element={<Login />} />
+        <Route path="/auth/register" element={<Register />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/products" element={<Products />} />
       </Routes>
     </BrowserRouter>
   );
