@@ -1,5 +1,7 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, Navigate } from "react-router-dom";
 import styled from "styled-components";
+import axios from 'axios'
+import React, { useState } from 'react';
 
 
 
@@ -82,21 +84,54 @@ const Link = styled.a`
   text-align:center;
 `;
 
+
 const Login = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [loggedIn, setLoggedIn] = useState(false); 
+    const [error, setError] = useState('');
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post('http://localhost:3000/auth/login', {
+                email,
+                password,
+            });
+            console.log(response.data); 
+            setLoggedIn(true); 
+        } catch (error) {
+            setError('Wrong email or password!');
+            console.error('Auth error:', error);
+        }
+    };
+
+    if (loggedIn) {
+        return <Navigate to="/products" />;
+    }
+
   return (
     <Container>
       <Wrapper>
         <Title>SIGN IN</Title>
-        <Form>
-          <Input placeholder="email" />
-          <PasswordInput placeholder="password" />
-          <Button>LOGIN</Button>
-          <NavLink to="/register" style={{ textDecoration: 'none', color: 'inherit', textAlign: 'center' }}>
-          <Link >
-          CREATE A NEW ACCOUNT
-          </Link>
+        <Form onSubmit={handleSubmit}>
+          <Input
+            type="email"
+            placeholder="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <PasswordInput
+            type="password"
+            placeholder="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Button type="submit">LOGIN</Button>
+          {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
+          <NavLink to="/auth/register" style={{ textDecoration: 'none', color: 'inherit', textAlign: 'center' }}>
+            <Link>CREATE A NEW ACCOUNT</Link>
           </NavLink>
-        
         </Form>
       </Wrapper>
     </Container>

@@ -11,6 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "@material-ui/core": "^4.12.4",
+    "axios": "^1.6.8",
+    "cors": "^2.8.5",
     "crypto-js": "^4.2.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.3.0",

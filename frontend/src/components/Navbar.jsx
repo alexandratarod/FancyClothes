@@ -1,8 +1,10 @@
 import { Badge } from "@material-ui/core";
-import { Search, ShoppingCartOutlined } from "@material-ui/icons";
+import { Search, ShoppingCartOutlined, Person } from "@material-ui/icons";
 import React from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
+import loggedIn from "../pages/Login"
+
 
 
 
@@ -65,6 +67,12 @@ const MenuItem = styled.div`
   margin-right: 30px;
 `;
 
+const UserIcon = styled(Person)`
+  font-size: 30px;
+  color: darkblue; 
+  cursor: pointer;
+`;
+
 const Navbar = () => {
   return (
     <Container>
@@ -81,9 +89,17 @@ const Navbar = () => {
           </SearchContainer>
         </Center>
         <Right>
-        <NavLink to="/login" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <MenuItem>SIGN IN</MenuItem>
-        </NavLink>
+        {/*
+        {loggedIn ? ( 
+              <MenuItem>
+                <UserIcon style={{ fontSize: 30 }} /> {}
+              </MenuItem>
+          ) : (
+          */}
+            <NavLink to="/auth/login" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <MenuItem>SIGN IN</MenuItem>
+            </NavLink>
+         {/*} )}*/}
         <NavLink to="/cart" style={{ textDecoration: 'none', color: 'inherit' }}>
           <MenuItem>
             <Badge badgeContent={4} color="primary">
