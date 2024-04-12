@@ -6,9 +6,7 @@ import Register from "./Register";
 
 const Home = () => {
   return (
-    <div> 
-      
-    </div>
+    <Navbar/>
   );
 };
 

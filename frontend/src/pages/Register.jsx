@@ -2,6 +2,7 @@ import { NavLink, Navigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from 'axios'
 import React, { useState } from 'react';
+import Navbar from "../components/Navbar";
 
 const Container = styled.div`
   width: 100vw;
@@ -10,7 +11,7 @@ const Container = styled.div`
       rgba(255, 255, 255, 0.5),
       rgba(255, 255, 255, 0.5)
     ),
-    url("https://images.pexels.com/photos/6984661/pexels-photo-6984661.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940")
+    url("https://img.freepik.com/premium-photo/positive-blonde-female-black-eyeglasses-chooses-fashionable-clothes-coat-rack_613910-7631.jpg?w=826")
       center;
   background-size: cover;
   display: flex;
@@ -60,7 +61,7 @@ const Button = styled.button`
   width: 50%;
   border: none;
   padding: 15px 20px;
-  background-color: darkblue;
+  background-color: #6666CC;
   color: white;
   font-weight: bold;
   cursor: pointer;
@@ -68,7 +69,7 @@ const Button = styled.button`
   margin-left: auto;
   margin-right: auto; 
   &:hover {
-    background-color: blue; 
+    background-color: #6699FF; 
   }
 `;
 
@@ -116,6 +117,8 @@ const Register = () => {
     }
 
     return (
+      <div>
+        <Navbar/>
         <Container>
             <Wrapper>
                 <Title>CREATE AN ACCOUNT</Title>
@@ -156,6 +159,7 @@ const Register = () => {
                 </NavLink>
             </Wrapper>
         </Container>
+        </div>
     );
 };
 

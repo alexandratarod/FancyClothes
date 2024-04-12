@@ -4,7 +4,7 @@ const router = require("express").Router();
 
 //CREATE
 //verificata
-router.post("/", async (req, res) => {
+router.post("/add-product", async (req, res) => {
   const newProduct = new Product(req.body);
 
   try {
@@ -45,7 +45,7 @@ router.delete("/:id", async (req, res) => {
 
 //GET PRODUCT
 //verificata
-router.get("/find/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
     res.status(200).json(product);

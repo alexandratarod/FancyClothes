@@ -2,6 +2,7 @@ import { NavLink, Navigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from 'axios'
 import React, { useState } from 'react';
+import Navbar from "../components/Navbar";
 
 
 
@@ -12,7 +13,7 @@ const Container = styled.div`
       rgba(255, 255, 255, 0.5),
       rgba(255, 255, 255, 0.5)
     ),
-    url("https://img.freepik.com/premium-photo/male-female-mannequins-fashionable-bright-clothes-window-clothing-store-front-view_120897-3817.jpg?w=900")
+    url("https://img.freepik.com/free-photo/young-man-shirt-choosing-clothes-mall-clothing-store_23-2148175648.jpg?t=st=1712931555~exp=1712935155~hmac=ecae712e4369bc075d6b4626c9202d9a0832d9b3fe45f48525fdd87d2ac9a551&w=900")
       center;
   background-size: cover;
   display: flex;
@@ -61,7 +62,7 @@ const Button = styled.button`
   width: 50%;
   border: none;
   padding: 15px 20px;
-  background-color: darkblue;
+  background-color: #6666CC;
   color: white;
   font-weight: bold;
   cursor: pointer;
@@ -69,7 +70,7 @@ const Button = styled.button`
   margin-left: auto;
   margin-right: auto; 
   &:hover {
-    background-color: blue; 
+    background-color: #6699FF; 
   }
   
 `;
@@ -111,6 +112,9 @@ const Login = () => {
     }
 
   return (
+    
+    <div>
+      <Navbar/>
     <Container>
       <Wrapper>
         <Title>SIGN IN</Title>
@@ -135,6 +139,7 @@ const Login = () => {
         </Form>
       </Wrapper>
     </Container>
+    </div>
   );
 };
 

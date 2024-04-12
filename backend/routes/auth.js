@@ -8,24 +8,22 @@ const jwt = require("jsonwebtoken");
 //testat in postman
 router.post("/register", async (req, res) => {
   try {
-    // Verificăm dacă există deja un utilizator cu această adresă de email
     const existingUser = await User.findOne({ email: req.body.email });
     if (existingUser) {
       return res.status(400).json({ message: "Email already exists" });
     }
 
-    // Dacă adresa de email este unică, creăm un utilizator nou
     const newUser = new User({
       name: req.body.name,
       email: req.body.email,
-      // Criptăm parola
+      
       password: CryptoJS.AES.encrypt(
         req.body.password,
         process.env.PASS_SEC
       ).toString(),
     });
 
-    // Salvăm utilizatorul nou în baza de date
+    
     const savedUser = await newUser.save();
     res.status(201).json(savedUser);
   } catch (err) {
