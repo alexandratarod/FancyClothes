@@ -37,8 +37,8 @@ const Form = styled.form`
 
 const Input = styled.input`
   display: block;
-  width: calc(100% - 20px); /* Lățimea inputului minus padding-ul */
-  margin: 10px auto; /* Margin auto pentru a centra inputurile */
+  width: calc(100% - 20px); 
+  margin: 10px auto; 
   padding: 10px;
 `;
 
@@ -74,7 +74,7 @@ const AddProduct = () => {
   const [price, setPrice] = useState('');
   const [img, setImage] = useState('');
   const [error, setError] = useState('');
-  const [added, setAdded] = useState(false); // Adăugat starea pentru verificarea dacă produsul a fost adăugat cu succes
+  const [added, setAdded] = useState(false); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -86,14 +86,14 @@ const AddProduct = () => {
         img,
       });
       console.log(response.data);
-      setAdded(true); // Setează starea pentru a indica că produsul a fost adăugat cu succes
+      setAdded(true); 
     } catch (error) {
       setError("Failed to add product!");
       console.error('Add product error:', error);
     }
   };
 
-  // Dacă produsul a fost adăugat cu succes, redirecționează către pagina de produse
+  
   if (added) {
     return <Navigate to="/products" />;
   }
