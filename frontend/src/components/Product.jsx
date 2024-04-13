@@ -22,8 +22,8 @@ const Container = styled.div`
   flex: 1;
   margin: 5px;
   display: flex;
-  flex-direction: column; /* Afișează elementele în coloană */
-  align-items: center; /* Aliniază elementele la centru */
+  flex-direction: column;
+  align-items: center; 
   margin: 5px;
   min-width: 280px;
   height: 350px;
