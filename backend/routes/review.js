@@ -1,10 +1,15 @@
 const Review = require("../models/Review");
 
 const router = require("express").Router();
+const {
+  verifyToken,
+  verifyTokenAndAuthorizationEntity,
+  verifyTokenAndAdmin,
+} = require("./verifyToken");
 
 //CREATE
 //verificata
-router.post("/", async (req, res) => {
+router.post("/", verifyToken, async (req, res) => {
   const newReview = new Review(req.body);
 
   try {
@@ -17,33 +22,41 @@ router.post("/", async (req, res) => {
 
 //UPDATE
 //verificata
-router.put("/:id", async (req, res) => {
-  try {
-    const updatedReview = await Review.findByIdAndUpdate(
-      req.params.id,
-      {
-        $set: req.body,
-      },
-      { new: true }
-    );
-    res.status(200).json(updatedReview);
-  } catch (err) {
-    res.status(500).json(err);
+router.put(
+  "/:id",
+  verifyTokenAndAuthorizationEntity("Review"),
+  async (req, res) => {
+    try {
+      const updatedReview = await Review.findByIdAndUpdate(
+        req.params.id,
+        {
+          $set: req.body,
+        },
+        { new: true }
+      );
+      res.status(200).json(updatedReview);
+    } catch (err) {
+      res.status(500).json(err);
+    }
   }
-});
+);
 
 //DELETE
 //verificata
-router.delete("/:id", async (req, res) => {
-  try {
-    await Review.findByIdAndDelete(req.params.id);
-    res.status(200).json("Review has been deleted...");
-  } catch (err) {
-    res.status(500).json(err);
+router.delete(
+  "/:id",
+  verifyTokenAndAuthorizationEntity("Review"),
+  async (req, res) => {
+    try {
+      await Review.findByIdAndDelete(req.params.id);
+      res.status(200).json("Review has been deleted...");
+    } catch (err) {
+      res.status(500).json(err);
+    }
   }
-});
+);
 
-//GET USER REVIEWS
+//GET USER REVIEWS -> la fel si aici ca la cart si order
 //verificata
 router.get("/find/:userId", async (req, res) => {
   try {
@@ -56,7 +69,7 @@ router.get("/find/:userId", async (req, res) => {
 
 //GET ALL
 //verificata
-router.get("/", async (req, res) => {
+router.get("/", verifyTokenAndAdmin, async (req, res) => {
   try {
     const orders = await Review.find();
     res.status(200).json(orders);
