@@ -16,7 +16,19 @@ const Products = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/products");
+        const accessToken = localStorage.getItem('accessToken');
+        console.log(accessToken);
+  
+        if (!accessToken) {
+          console.error("Access token is missing from localStorage");
+          return;
+        }
+
+        const config = {
+          headers: { authorization: "Token " + accessToken }
+        };
+  
+        const response = await axios.get("http://localhost:3000/products", config);
         setProducts(response.data);
       } catch (error) {
         console.error("Error fetching products:", error);
