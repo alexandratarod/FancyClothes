@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, Navigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from 'axios';
 import Navbar from "../components/Navbar";
+
+
 
 const Container = styled.div`
   width: 100vw;
@@ -70,30 +72,29 @@ const LinkStyled = styled(Link)`
 `;
 
 const AddProduct = () => {
-  const [title, setName] = useState('');
+  const [title, setTitle] = useState('');
   const [price, setPrice] = useState('');
   const [img, setImage] = useState('');
   const [error, setError] = useState('');
-  const [added, setAdded] = useState(false); // Adăugat starea pentru verificarea dacă produsul a fost adăugat cu succes
+  const [added, setAdded] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:3000/products/add-product', {
+      const response = await axios.post('http://localhost:3000/products/add-product', { 
         title,
         price,
         img,
       });
       console.log(response.data);
-      setAdded(true); // Setează starea pentru a indica că produsul a fost adăugat cu succes
+      setAdded(true);
     } catch (error) {
       setError("Failed to add product!");
       console.error('Add product error:', error);
     }
   };
 
-  // Dacă produsul a fost adăugat cu succes, redirecționează către pagina de produse
   if (added) {
     return <Navigate to="/products" />;
   }
@@ -109,7 +110,7 @@ const AddProduct = () => {
               type="text"
               placeholder="Product Name"
               value={title}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => setTitle(e.target.value)}
             />
 
             <Input

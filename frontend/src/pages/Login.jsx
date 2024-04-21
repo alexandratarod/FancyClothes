@@ -1,8 +1,9 @@
 import { NavLink, Navigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from 'axios'
-import React, { useState } from 'react';
+import { useState, useContext } from 'react';
 import Navbar from "../components/Navbar";
+
 
 
 
@@ -87,58 +88,54 @@ const Link = styled.a`
 
 
 const Login = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [loggedIn, setLoggedIn] = useState(false); 
-    const [error, setError] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await axios.post('http://localhost:3000/auth/login', {
-                email,
-                password,
-            });
-            console.log(response.data); 
-            setLoggedIn(true); 
-        } catch (error) {
-            setError('Wrong email or password!');
-            console.error('Auth error:', error);
-        }
-    };
-
-    if (loggedIn) {
-        return <Navigate to="/products" />;
+  const handleSubmit = async (e) => {
+    
+    e.preventDefault();
+    try {
+      const res = await axios.post("http://localhost:3000/auth/login", { email, password });
+      const accessToken = res.data.accessToken; 
+      localStorage.setItem('accessToken', accessToken); 
+      setIsLoggedIn(true); 
+    } catch (err) {
+      console.log(err);
+      setError(true);
     }
+  
+  };
 
   return (
-    
     <div>
-      <Navbar/>
-    <Container>
-      <Wrapper>
-        <Title>SIGN IN</Title>
-        <Form onSubmit={handleSubmit}>
-          <Input
-            type="email"
-            placeholder="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <PasswordInput
-            type="password"
-            placeholder="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Button type="submit">LOGIN</Button>
-          {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
-          <NavLink to="/auth/register" style={{ textDecoration: 'none', color: 'inherit', textAlign: 'center' }}>
-            <Link>CREATE A NEW ACCOUNT</Link>
-          </NavLink>
-        </Form>
-      </Wrapper>
-    </Container>
+      <Navbar />
+      <Container>
+        <Wrapper>
+          <Title>SIGN IN</Title>
+          <Form onSubmit={handleSubmit}>
+            <Input
+              type="email"
+              placeholder="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <PasswordInput
+              type="password"
+              placeholder="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Button type="submit">LOGIN</Button>
+            {error && <p style={{ color: 'red', textAlign: 'center' }}>Wrong email or password!</p>}
+            <NavLink to="/auth/register" style={{ textDecoration: 'none', color: 'inherit', textAlign: 'center' }}>
+              <Link>CREATE A NEW ACCOUNT</Link>
+            </NavLink>
+          </Form>
+        </Wrapper>
+      </Container>
+      {isLoggedIn && <Navigate to="/products" />}
     </div>
   );
 };

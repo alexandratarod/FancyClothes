@@ -61,10 +61,8 @@ router.delete(
 
 //GET PRODUCT
 //verificata
-router.get(
-  "/:id",
-  verifyTokenAndAuthorizationEntity("Product"),
-  async (req, res) => {
+router.get("/:id", async (req, res) => {
+  
     try {
       const product = await Product.findById(req.params.id);
       res.status(200).json(product);
@@ -76,7 +74,7 @@ router.get(
 
 //GET ALL PRODUCTS
 //verificata
-router.get("/", verifyTokenAndAdmin, async (req, res) => {
+router.get("/", verifyToken, async (req, res) => {
   const qNew = req.query.new;
   const qCategory = req.query.category;
   try {

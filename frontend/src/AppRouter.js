@@ -10,8 +10,11 @@ import ProductPage from './pages/ProductPage';
 import AddProduct from './pages/AddProduct';
 
 
+
 const AppRouter = () => {
+
   return (
+    
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -23,6 +26,7 @@ const AppRouter = () => {
         <Route path="/add-product" element={<AddProduct />} />
       </Routes>
     </BrowserRouter>
+    
   );
 };
 
