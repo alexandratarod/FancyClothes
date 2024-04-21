@@ -7,8 +7,8 @@ const Container = styled.div`
   width: 100vw;
   height: 73vh ; 
   background: linear-gradient(
-    rgba(100, 100, 100, 0.4),
-    rgba(100, 100, 100, 0.4)
+    rgba(0, 0, 100, 0.2),
+    rgba(0, 0, 100, 0.2)
     ),
     url(https://img.freepik.com/free-photo/enthusiastic-woman-long-dress-posing-one-leg-cloakroom_197531-7148.jpg?t=st=1713019684~exp=1713023284~hmac=9bc125221d21eed7db5ed299ea367e6b42371aa4c06180239f2cb4fd815d5cec&w=900) left top -65px; 
   background-size: cover; 
@@ -30,6 +30,7 @@ const Title = styled.h1`
 
 const Description = styled.p`
   font-size: 20px;
+  font-weight: bold;
   margin-top: 20px;
 `;
 
@@ -41,7 +42,7 @@ const Home = () => {
       <Container>
         <ContentWrapper>
           <Title>WELCOME TO FANCY CLOTHES!</Title>
-          <Description>Your ultimate destination for trendy and fashionable clothing.</Description>
+          <Description>Style with a story!</Description>
         </ContentWrapper>
       </Container>
     </div>
