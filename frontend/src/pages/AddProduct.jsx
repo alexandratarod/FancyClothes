@@ -39,8 +39,8 @@ const Form = styled.form`
 
 const Input = styled.input`
   display: block;
-  width: calc(100% - 20px); /* Lățimea inputului minus padding-ul */
-  margin: 10px auto; /* Margin auto pentru a centra inputurile */
+  width: calc(100% - 20px); 
+  margin: 10px auto; 
   padding: 10px;
 `;
 
@@ -76,7 +76,8 @@ const AddProduct = () => {
   const [price, setPrice] = useState('');
   const [img, setImage] = useState('');
   const [error, setError] = useState('');
-  const [added, setAdded] = useState(false);
+  const [added, setAdded] = useState(false); 
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -88,13 +89,17 @@ const AddProduct = () => {
         img,
       });
       console.log(response.data);
+
       setAdded(true);
+
     } catch (error) {
       setError("Failed to add product!");
       console.error('Add product error:', error);
     }
   };
 
+
+  
   if (added) {
     return <Navigate to="/products" />;
   }

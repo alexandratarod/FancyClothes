@@ -6,11 +6,9 @@ import { NavLink } from "react-router-dom";
 import loggedIn from "../pages/Login"
 
 
-
-
-
 const Container = styled.div`
   height: 60px;
+  border-bottom: 1px solid lightgray;
 `;
 
 const Wrapper = styled.div`
