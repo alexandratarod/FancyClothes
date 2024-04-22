@@ -76,6 +76,14 @@ const Message = styled.div`
   margin-top: 20px;
 `;
 
+const ErrorMessage = styled.div`
+  background-color: #FF0000;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  margin-top: 20px;
+`;
+
 const UserPage = () => {
   const { id } = useParams(); 
   const [user, setUser] = useState(null);
@@ -85,6 +93,7 @@ const UserPage = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [createdAt, setDate] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -125,7 +134,21 @@ const UserPage = () => {
         headers: { authorization: "Token " + accessToken }
       };
 
-      await axios.put(`http://localhost:3000/users/${id}`, { name, email, password }, config);
+      if (password !== confirmPassword) {
+        setErrorMessage("Password and Confirm Password must match!");
+        return;
+      }
+
+      let updatedData = { name, email };
+
+
+      if (password && password.trim() !== '') {
+        updatedData.password = password;
+      }
+  
+      await axios.put(`http://localhost:3000/users/${id}`, updatedData, config);
+
+      
 
       setUser({ ...user, name, email });
       setSuccessMessage("User updated successfully!");
@@ -148,6 +171,7 @@ const UserPage = () => {
               <div>Joined: {createdAt.substring(0, 10)} </div>
             </UserInfo>
             {successMessage && <Message>{successMessage}</Message>}
+            {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
           </InfoContainer>
           <InfoContainer>
             <Title>Update Profile</Title>
