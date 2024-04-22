@@ -2,7 +2,9 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import Products from "../components/Products";
 import Navbar from "../components/Navbar";
-import { NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
+import axios from "axios";
 
 const Container = styled.div``;
 
@@ -42,10 +44,68 @@ const RightSection = styled.div`
 
 const ProductsPage = () => {
   const [selectedOption, setSelectedOption] = useState("All Products");
-  
+  const [products, setProducts] = useState([]);
+  const [userId, setUserId] = useState(null); // Definirea userId în scopul mai larg
+
+  useEffect(() => {
+    const checkAccessToken = () => {
+      const accessToken = localStorage.getItem("accessToken");
+      if (accessToken) {
+        const decodedToken = jwtDecode(accessToken);
+        const id = decodedToken.id;
+        setUserId(id);
+        if (decodedToken.exp * 1000 < Date.now()) {
+          localStorage.removeItem("accessToken");
+        }
+      }
+    };
+
+    checkAccessToken();
+  }, []);
+
   const handleSelectChange = (e) => {
-    setSelectedOption(e.target.value);
+    const selectedValue = e.target.value;
+    setSelectedOption(selectedValue);
+
+    if (selectedValue === "My Products") {
+      fetchMyProducts(userId);
+    } else {
+      fetchAllProducts();
+    }
   };
+
+  const accessToken = localStorage.getItem("accessToken");
+  const config = {
+    headers: { authorization: "Token " + accessToken },
+  };
+
+  const fetchMyProducts = (userId) => {
+    axios
+      .get(`http://localhost:3000/products/my-products/${userId}`, config)
+      .then((response) => {
+        setProducts(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching user products", error);
+        setProducts([]);
+      });
+  };
+
+  const fetchAllProducts = () => {
+    axios
+      .get("http://localhost:3000/products", config)
+      .then((response) => {
+        setProducts(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching all products", error);
+        setProducts([]);
+      });
+  };
+
+  useEffect(() => {
+    fetchAllProducts();
+  }, []);
 
   const showAddProductButton = selectedOption === "My Products";
 
@@ -68,7 +128,7 @@ const ProductsPage = () => {
           )}
         </RightSection>
       </FilterContainer>
-      <Products />
+      <Products products={products} />
     </Container>
   );
 };
