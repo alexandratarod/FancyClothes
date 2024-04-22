@@ -62,15 +62,13 @@ router.delete(
 //GET PRODUCT
 //verificata
 router.get("/:id", async (req, res) => {
-  
-    try {
-      const product = await Product.findById(req.params.id);
-      res.status(200).json(product);
-    } catch (err) {
-      res.status(500).json(err);
-    }
+  try {
+    const product = await Product.findById(req.params.id);
+    res.status(200).json(product);
+  } catch (err) {
+    res.status(500).json(err);
   }
-);
+});
 
 //GET ALL PRODUCTS
 //verificata
@@ -90,6 +88,36 @@ router.get("/", verifyToken, async (req, res) => {
       });
     } else {
       products = await Product.find();
+    }
+
+    res.status(200).json(products);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+//GET ALL USER'S PRODUCTS
+router.get("/my-products/:id", verifyToken, async (req, res) => {
+  const userId = req.params.id;
+  const qNew = req.query.new;
+  const qCategory = req.query.category;
+
+  try {
+    let products;
+
+    if (qNew) {
+      products = await Product.find({ userId: userId })
+        .sort({ createdAt: -1 })
+        .limit(1);
+    } else if (qCategory) {
+      products = await Product.find({
+        userId: userId,
+        categories: {
+          $in: [qCategory],
+        },
+      });
+    } else {
+      products = await Product.find({ userId: userId });
     }
 
     res.status(200).json(products);
