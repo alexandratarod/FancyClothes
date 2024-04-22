@@ -1,10 +1,9 @@
-import { Badge } from "@material-ui/core";
+import { Badge, Menu, MenuItem } from "@material-ui/core";
 import { Search, ShoppingCartOutlined, Person } from "@material-ui/icons";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
-import loggedIn from "../pages/Login"
-
+import { NavLink, useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 const Container = styled.div`
   height: 60px;
@@ -55,55 +54,127 @@ const Right = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  margin-right: 15px;
 `;
 
-const MenuItem = styled.div`
-  font-size: 14px;
+const MyMenuItem = styled.div`
+  font-size: 20px;
   font-weight: bold;
   cursor: pointer;
-  margin-right: 30px;
+  margin-right: 20px;
+  &:hover {
+    color: darkgrey;
+  }
 `;
 
-const UserIcon = styled(Person)`
+const UserIconContainer = styled.div`
   font-size: 30px;
-  color: darkblue; 
+  color: #6666cc;
   cursor: pointer;
+  margin-right: 15px;
+  margin-top: 5px;
+  justify-content: center;
+
+  &:hover {
+    color: darkgrey;
+  }
 `;
 
 const Navbar = () => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const navigate = useNavigate();
+  const [userId, setUserId] = useState(null); // Definirea userId în scopul mai larg
+
+  useEffect(() => {
+    const checkAccessToken = () => {
+      const accessToken = localStorage.getItem("accessToken");
+      if (accessToken) {
+        const decodedToken = jwtDecode(accessToken);
+        const id = decodedToken.id; // Salvarea ID-ului utilizatorului într-o stare
+        setUserId(id); // Actualizarea userId cu ID-ul utilizatorului
+        if (decodedToken.exp * 1000 < Date.now()) {
+          localStorage.removeItem("accessToken");
+          navigate("/auth/login");
+        }
+      }
+    };
+
+    checkAccessToken();
+  }, [navigate]);
+
+  const handleMenuClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken");
+    navigate("/auth/login");
+  };
+
+  const loggedIn = localStorage.getItem("accessToken");
+
+  const handleProfileClick = () => {
+    navigate(`/user/${userId}`); // Utilizarea userId în handleClickProfile
+  };
+
   return (
     <Container>
       <Wrapper>
         <Left>
-        <NavLink to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-        <Logo>FANCY CLOTHES</Logo>
-        </NavLink>
+          <NavLink to="/" style={{ textDecoration: "none", color: "inherit" }}>
+            <Logo>FANCY CLOTHES</Logo>
+          </NavLink>
         </Left>
         <Center>
-        <SearchContainer>
+          <SearchContainer>
             <Input placeholder="Search" />
             <Search style={{ color: "gray", fontSize: 16 }} />
           </SearchContainer>
         </Center>
         <Right>
-        {/*
-        {loggedIn ? ( 
-              <MenuItem>
-                <UserIcon style={{ fontSize: 30 }} /> {}
-              </MenuItem>
+          {loggedIn ? (
+            <>
+              <UserIconContainer>
+                <Person
+                  aria-controls="user-menu"
+                  aria-haspopup="true"
+                  onClick={handleMenuClick}
+                />
+              </UserIconContainer>
+
+              <Menu
+                id="user-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleMenuClose}
+              >
+                <MenuItem onClick={handleProfileClick}>PROFILE</MenuItem>
+                <MenuItem onClick={handleMenuClose}>MY ORDERS</MenuItem>
+                <MenuItem onClick={handleMenuClose}>MY SALES</MenuItem>
+                <MenuItem onClick={handleLogout}>LOGOUT</MenuItem>
+              </Menu>
+            </>
           ) : (
-          */}
-            <NavLink to="/auth/login" style={{ textDecoration: 'none', color: 'inherit' }}>
-              <MenuItem>SIGN IN</MenuItem>
+            <NavLink
+              to="/auth/login"
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              <MyMenuItem>SIGN IN</MyMenuItem>
             </NavLink>
-         {/*} )}*/}
-        <NavLink to="/cart" style={{ textDecoration: 'none', color: 'inherit' }}>
-          <MenuItem>
-            <Badge badgeContent={4} color="primary">
-              <ShoppingCartOutlined />
-            </Badge>
-          </MenuItem>
+          )}
+          <NavLink
+            to="/cart"
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <MyMenuItem>
+              <Badge badgeContent={4} color="primary">
+                <ShoppingCartOutlined />
+              </Badge>
+            </MyMenuItem>
           </NavLink>
         </Right>
       </Wrapper>

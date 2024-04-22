@@ -8,6 +8,7 @@ import Navbar from './components/Navbar';
 import Products from './pages/ProductsPage';
 import ProductPage from './pages/ProductPage';
 import AddProduct from './pages/AddProduct';
+import UserPage from './pages/UserPage';
 
 
 
@@ -24,6 +25,7 @@ const AppRouter = () => {
         <Route path="/products" element={<Products />} />
         <Route path="/product/:id" element={<ProductPage />} />
         <Route path="/add-product" element={<AddProduct />} />
+        <Route path="/user/:id" element={<UserPage />} />
       </Routes>
     </BrowserRouter>
     
