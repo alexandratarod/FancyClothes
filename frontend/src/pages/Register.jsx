@@ -84,6 +84,14 @@ const Link = styled.a`
   display: block;
 `;
 
+const Message = styled.div`
+  background-color: #FF0000;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  margin-top: 20px;
+`;
+
 const Register = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -153,7 +161,8 @@ const Register = () => {
                     </Agreement>
                     <Button type="submit">REGISTER</Button>
                 </Form>
-                {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
+                {error && <Message>{error}</Message>}
+                
                 <NavLink to="/auth/login" style={{ textDecoration: 'none', color: 'inherit', textAlign: 'center' }}>
                     <Link>ALREADY HAVE AN ACCOUNT? LOGIN</Link>
                 </NavLink>

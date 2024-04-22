@@ -86,7 +86,13 @@ const Link = styled.a`
   text-align:center;
 `;
 
-
+const Message = styled.div`
+  background-color: #FF0000;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  margin-top: 20px;
+`;
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -128,7 +134,7 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
             <Button type="submit">LOGIN</Button>
-            {error && <p style={{ color: 'red', textAlign: 'center' }}>Wrong email or password!</p>}
+            {error && <Message>Wrong email or password!</Message>}
             <NavLink to="/auth/register" style={{ textDecoration: 'none', color: 'inherit', textAlign: 'center' }}>
               <Link>CREATE A NEW ACCOUNT</Link>
             </NavLink>
