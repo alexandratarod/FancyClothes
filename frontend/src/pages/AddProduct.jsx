@@ -81,17 +81,31 @@ const AddProduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
-      const response = await axios.post('http://localhost:3000/products/add-product', { 
-        title,
-        price,
-        img,
-      });
-      console.log(response.data);
-
-      setAdded(true);
-
+      const accessToken = localStorage.getItem('accessToken');
+      if (!accessToken) {
+        setError("Access token is missing from localStorage");
+        return;
+      }
+  
+      const config = {
+        headers: { authorization: "Token " + accessToken }
+      };
+  
+      const data = {
+        title: title,
+        price: price,
+        img: img
+      };
+  
+      const response = await axios.post('http://localhost:3000/products/add-product', data, config);
+  
+      if (response.status === 200) {
+        setAdded(true);
+      } else {
+        setError("Failed to add product!");
+      }
     } catch (error) {
       setError("Failed to add product!");
       console.error('Add product error:', error);
