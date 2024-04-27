@@ -1,3 +1,4 @@
+const { Storage } = require('@google-cloud/storage');
 const Product = require("../models/Product");
 
 const router = require("express").Router();
@@ -48,7 +49,7 @@ router.put(
 //verificata
 router.delete(
   "/:id",
-  verifyTokenAndAuthorizationEntity("Product"),
+  //verifyToken,
   async (req, res) => {
     try {
       await Product.findByIdAndDelete(req.params.id);
@@ -72,7 +73,7 @@ router.get("/:id", async (req, res) => {
 
 //GET ALL PRODUCTS
 //verificata
-router.get("/", verifyToken, async (req, res) => {
+router.get("/", async (req, res) => {
   const qNew = req.query.new;
   const qCategory = req.query.category;
   try {
