@@ -1,4 +1,5 @@
 const Order = require("../models/Order");
+const Product = require("../models/Product");
 
 const router = require("express").Router();
 const {
@@ -15,6 +16,39 @@ router.post("/", verifyToken, async (req, res) => {
   try {
     const savedOrder = await newOrder.save();
     res.status(200).json(savedOrder);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+//GET order
+//verificata
+router.get("/:id", verifyToken, async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.id);
+    res.status(200).json(order);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+//GET all the products of the order
+//verificata
+router.get("/:id/products", verifyToken, async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.id);
+    console.log(req.params.id);
+    if (!order) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+    let productsDetails = [];
+    for (let item of order.products) {
+      const product = await Product.findById(item.productId);
+      if (product) {
+        productsDetails.push(product);
+      }
+    }
+    res.status(200).json(productsDetails);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -58,18 +92,14 @@ router.delete(
 
 //GET USER ORDERS -> la fel ca la cart si aici
 //verificata
-router.get(
-  "/find/:userId",
-  verifyTokenAndAuthorizationEntity("Order"),
-  async (req, res) => {
-    try {
-      const orders = await Order.find({ userId: req.params.userId });
-      res.status(200).json(orders);
-    } catch (err) {
-      res.status(500).json(err);
-    }
+router.get("/find/:userId", verifyToken, async (req, res) => {
+  try {
+    const orders = await Order.find({ userId: req.params.userId });
+    res.status(200).json(orders);
+  } catch (err) {
+    res.status(500).json(err);
   }
-);
+});
 
 //GET ALL
 //verificata

@@ -1,21 +1,19 @@
-import React from 'react';
-import { BrowserRouter , Route, Routes} from 'react-router-dom';
-import Home from './pages/Home';
-import Login from './pages/Login';
-import Cart from './pages/Cart';
-import Register from './pages/Register';
-import ProductPage from './pages/ProductPage';
-import AddProduct from './pages/AddProduct';
-import UserPage from './pages/UserPage';
-import ProductsPage from './pages/ProductsPage';
-import UpdateProductPage from './pages/UpdateProductPage'
-
-
+import React from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Cart from "./pages/Cart";
+import Register from "./pages/Register";
+import ProductPage from "./pages/ProductPage";
+import AddProduct from "./pages/AddProduct";
+import UserPage from "./pages/UserPage";
+import ProductsPage from "./pages/ProductsPage";
+import UpdateProductPage from "./pages/UpdateProductPage";
+import MyOrdersPage from "./pages/MyOrdersPage";
+import Order from "./pages/Order";
 
 const AppRouter = () => {
-
   return (
-    
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -28,9 +26,10 @@ const AppRouter = () => {
         <Route path="/user/:id" element={<UserPage />} />
         <Route path="/my-products" element={<ProductsPage />} />
         <Route path="/update-product/:id" element={<UpdateProductPage />} />
+        <Route path="/orders/find/:id" element={<MyOrdersPage />} />
+        <Route path="/orders/:id" element={<Order />} />
       </Routes>
     </BrowserRouter>
-    
   );
 };
 
