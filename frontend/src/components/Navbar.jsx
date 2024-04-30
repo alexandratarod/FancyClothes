@@ -120,6 +120,10 @@ const Navbar = () => {
     navigate(`/user/${userId}`); // Utilizarea userId în handleClickProfile
   };
 
+  const handleMyOrdersClick = () => {
+    navigate(`/orders/find/${userId}`);
+  };
+
   return (
     <Container>
       <Wrapper>
@@ -153,7 +157,7 @@ const Navbar = () => {
                 onClose={handleMenuClose}
               >
                 <MenuItem onClick={handleProfileClick}>PROFILE</MenuItem>
-                <MenuItem onClick={handleMenuClose}>MY ORDERS</MenuItem>
+                <MenuItem onClick={handleMyOrdersClick}>MY ORDERS</MenuItem>
                 <MenuItem onClick={handleMenuClose}>MY SALES</MenuItem>
                 <MenuItem onClick={handleLogout}>LOGOUT</MenuItem>
               </Menu>
