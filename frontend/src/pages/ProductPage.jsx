@@ -45,6 +45,12 @@ const Price = styled.span`
   padding-bottom: 20px;
 `;
 
+const Size = styled.h1`
+  font-weight: bolt;
+  font-size: 25px;
+  padding-bottom: 20px;
+`;
+
 
 const AddContainer = styled.div`
   width: 50%;
@@ -97,6 +103,7 @@ const ProductPage = () => {
           <InfoContainer>
             <Title>{product.title}</Title>
             <Desc>{product.description}</Desc>
+            <Size>Size: {product.size}</Size>
             <Price>{product.price} RON</Price>
             <AddContainer>
               <Button>ADD TO CART</Button>
