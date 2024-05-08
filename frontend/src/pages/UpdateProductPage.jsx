@@ -21,7 +21,7 @@ const Container = styled.div`
 `;
 
 const Wrapper = styled.div`
-  padding: 50px;
+  padding: 30px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 20px;
@@ -90,8 +90,10 @@ const UpdateProductPage = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [title, setTitle] = useState('');
+  const [size, setSize] = useState('');
   const [price, setPrice] = useState('');
   const [img, setImg] = useState('');
+  const [newImg, setNewImg] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -101,6 +103,7 @@ const UpdateProductPage = () => {
         const response = await axios.get(`http://localhost:3000/products/${id}`);
         setProduct(response.data);
         setTitle(response.data.title);
+        setSize(response.data.size);
         setPrice(response.data.price);
         setImg(response.data.img);
       } catch (error) {
@@ -126,43 +129,42 @@ const UpdateProductPage = () => {
   
   const handleUpdateProduct = async () => {
     try {
-
       const accessToken = localStorage.getItem('accessToken');
-
+  
       if (!accessToken) {
         console.error('Access token is missing from localStorage');
         return;
       }
-
+  
       const config = {
         headers: {
           Authorization: 'Token ' + accessToken,
         },
       };
 
+      let imgUrl;
+
       
-      if (img) {
+      if (newImg) {
         const storageRef = firebase.storage().ref();
-        const fileRef = storageRef.child(img.name);
-        await fileRef.put(img);
-        const imageUrl = await fileRef.getDownloadURL();
+        const fileRef = storageRef.child(newImg.name);
+        await fileRef.put(newImg);
+        imgUrl = await fileRef.getDownloadURL();
+        console.log(imgUrl);
+      }else{
+
+        imgUrl=img
+      } 
+     
+      await axios.put(`http://localhost:3000/products/${id}`, { title, size, price, img: imgUrl}, config);
   
-        await axios.put(`http://localhost:3000/products/${id}`, { title, price, img: imageUrl }, config);
-  
-        setSuccessMessage("Product updated successfully!");
-      } else {
-        // Dacă nu se încarcă o imagine, actualizați doar titlul și prețul
-        await axios.put(`http://localhost:3000/products/${id}`, { title, price }, config);
-  
-        setSuccessMessage("Product updated successfully!");
-      }
+      setSuccessMessage("Product updated successfully!");
     } catch (error) {
       setErrorMessage("Failed to update product!");
       console.error("Error updating product:", error);
     }
   };
   
-
   return (
     <div>
       <Navbar />
@@ -174,6 +176,7 @@ const UpdateProductPage = () => {
               <ProductInfo>
                 {product.img && <img src={product.img} alt="Product" width="200" height="200" />}
                 <div>Title: {title}</div>
+                <div>Size: {size}</div>
                 <div>Price: ${price}</div>
               </ProductInfo>
               {successMessage && <Message>{successMessage}</Message>}
@@ -183,10 +186,12 @@ const UpdateProductPage = () => {
               <Title>Update Product</Title>
               <Label>Title:</Label>
               <Input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+              <Label>Size:</Label>
+              <Input type="text" value={size} onChange={(e) => setSize(e.target.value)} />
               <Label>Price:</Label>
               <Input type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
               <Label>Image:</Label>
-              <Input type="file" accept="image/*" onChange={(e) => setImg(e.target.files[0])} />
+              <Input type="file" accept="image/*" onChange={(e) => setNewImg(e.target.files[0])} />
               <Button onClick={handleUpdateProduct}>Update</Button>
             </InfoContainer>
           </Wrapper>

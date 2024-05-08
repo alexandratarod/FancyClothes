@@ -72,6 +72,7 @@ const LinkStyled = styled(Link)`
 
 const AddProduct = () => {
   const [title, setTitle] = useState('');
+  const [size, setSize] = useState('');
   const [price, setPrice] = useState('');
   const [img, setImage] = useState(null);
   const [error, setError] = useState('');
@@ -111,7 +112,7 @@ const AddProduct = () => {
         },
       };
 
-      const response = await axios.post('http://localhost:3000/products/add-product', { title, price, img: imageUrl }, config);
+      const response = await axios.post('http://localhost:3000/products/add-product', { title, size, price, img: imageUrl }, config);
 
       if (response.status === 200) {
         setAdded(true);
@@ -142,6 +143,12 @@ const AddProduct = () => {
               onChange={(e) => setTitle(e.target.value)}
             />
 
+            <Input
+              type="text"
+              placeholder="Product Size"
+              value={size}
+              onChange={(e) => setSize(e.target.value)}
+            />
             <Input
               type="text"
               placeholder="Price"
