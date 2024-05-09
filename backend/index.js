@@ -2,7 +2,8 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-const path = require("path"); // Adaugă modulul 'path'
+const path = require("path"); 
+
 
 const authRoute = require("./routes/auth");
 const userRoute = require("./routes/user");
@@ -11,6 +12,8 @@ const cartRoute = require("./routes/cart");
 const orderRoute = require("./routes/order");
 const reviewRoute = require("./routes/review");
 const stripeRoute = require("./routes/stripe");
+const labelsRoute = require("./routes/labels");
+const descriptionRoute = require("./routes/description");
 
 const cors = require("cors");
 
@@ -37,6 +40,11 @@ app.use("/cart", cartRoute);
 app.use("/orders", orderRoute);
 app.use("/reviews", reviewRoute);
 app.use("/api/checkout", stripeRoute);
+app.use("/labels", labelsRoute);
+app.use("/chatgpt", descriptionRoute);
+
+
+
 
 app.listen(process.env.PORT || 3000, () => {
   console.log("Backend server is running!");

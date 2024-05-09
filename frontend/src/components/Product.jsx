@@ -123,7 +123,7 @@ const Product = ({ item, onDeleteClick}) => {
         
       </Info>
       <Title>{item.title}</Title>
-      <Price>{item.price} RON</Price>
+      <Price>${item.price}</Price>
     </Container>
   );
 };

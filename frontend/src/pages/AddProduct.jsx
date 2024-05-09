@@ -70,15 +70,30 @@ const LinkStyled = styled(Link)`
   display: block;
 `;
 
+const firebaseConfig = {
+  apiKey: "AIzaSyDm0AJFnnfz8brO8ysEgr2KVb4jI865xsU",
+  authDomain: "fancyclothes-3baa8.firebaseapp.com",
+  projectId: "fancyclothes-3baa8",
+  storageBucket: "fancyclothes-3baa8.appspot.com",
+  messagingSenderId: "391809455618",
+  appId: "1:391809455618:web:86b4b0adc087321860391b",
+  measurementId: "G-XLF7EXD4LM"
+};
+
+firebase.initializeApp(firebaseConfig);
+
 const AddProduct = () => {
   const [title, setTitle] = useState('');
   const [size, setSize] = useState('');
   const [price, setPrice] = useState('');
   const [img, setImage] = useState(null);
+  const [labels, setLabels] = useState([]);
+  const [description, setDescription] = useState('');
   const [error, setError] = useState('');
   const [added, setAdded] = useState(false);
 
   useEffect(() => {
+   
     const firebaseConfig = {
       apiKey: "AIzaSyDm0AJFnnfz8brO8ysEgr2KVb4jI865xsU",
       authDomain: "fancyclothes-3baa8.firebaseapp.com",
@@ -91,10 +106,51 @@ const AddProduct = () => {
     firebase.initializeApp(firebaseConfig);
   }, []);
 
+  const handleGenerateLabels = async () => {
+    try {
+      const storageRef = firebase.storage().ref();
+      const fileRef = storageRef.child(img.name);
+      await fileRef.put(img);
+      const imageUrl = await fileRef.getDownloadURL();
+
+      const response = await axios.get('http://localhost:3000/labels/generate-labels', {
+        params: { imageUrl }
+      });
+
+      console.log("Labels response:", response.data);
+      setLabels(response.data.labels);
+
+      return response.data.labels;
+    } catch (error) {
+      setError('Failed to generate labels');
+      console.error('Label generation error:', error);
+    }
+  };
+
+  const handleGenerateDescription = async () => {
+    try {
+      
+      const generatedLabels = await handleGenerateLabels();
+
+      console.log(generatedLabels);
+
+      const response = await axios.post('http://localhost:3000/chatgpt/generate-description', { labels: generatedLabels, title});
+
+      console.log("Description response:", response.data);
+      setDescription(response.data.description);
+      return response.data.description;
+    } catch (error) {
+      setError('Failed to generate description');
+      console.error('Description generation error:', error);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
+      const generatedDescription = await handleGenerateDescription();
+      console.log(generatedDescription);
       const storageRef = firebase.storage().ref();
       const fileRef = storageRef.child(img.name);
       await fileRef.put(img);
@@ -112,9 +168,18 @@ const AddProduct = () => {
         },
       };
 
-      const response = await axios.post('http://localhost:3000/products/add-product', { title, size, price, img: imageUrl }, config);
+      const productData = {
+        title,
+        size,
+        price,
+        img: imageUrl,
+        description: generatedDescription,
+      };
 
-      if (response.status === 200) {
+      
+      const addProductResponse = await axios.post('http://localhost:3000/products/add-product', productData, config);
+
+      if (addProductResponse.status === 200) {
         setAdded(true);
       } else {
         setError('Failed to add product!');

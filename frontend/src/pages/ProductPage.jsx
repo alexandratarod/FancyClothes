@@ -104,7 +104,7 @@ const ProductPage = () => {
             <Title>{product.title}</Title>
             <Desc>{product.description}</Desc>
             <Size>Size: {product.size}</Size>
-            <Price>{product.price} RON</Price>
+            <Price>${product.price}</Price>
             <AddContainer>
               <Button>ADD TO CART</Button>
             </AddContainer>
