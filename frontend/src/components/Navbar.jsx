@@ -83,8 +83,16 @@ const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
   const [userId, setUserId] = useState(null); // Definirea userId în scopul mai larg
+  const [cartLength, setCartLength] = useState(0);
 
   useEffect(() => {
+
+    const storedCartLength = localStorage.getItem("cartLength");
+    if (storedCartLength) {
+      setCartLength(parseInt(storedCartLength));
+    }
+
+
     const checkAccessToken = () => {
       const accessToken = localStorage.getItem("accessToken");
       if (accessToken) {
@@ -175,7 +183,7 @@ const Navbar = () => {
             style={{ textDecoration: "none", color: "inherit" }}
           >
             <MyMenuItem>
-              <Badge badgeContent={4} color="primary">
+              <Badge badgeContent={cartLength} color="primary">
                 <ShoppingCartOutlined />
               </Badge>
             </MyMenuItem>

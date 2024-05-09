@@ -3,63 +3,47 @@ import { useParams } from "react-router-dom";
 import axios from 'axios';
 import Navbar from "../components/Navbar";
 import styled from "styled-components";
+import { jwtDecode } from "jwt-decode";
 
-const Container = styled.div`
-`;
-
+const Container = styled.div``;
 const Wrapper = styled.div`
   padding: 50px;
   display: flex;
-
 `;
-
 const ImgContainer = styled.div`
   flex: 1;
-  
 `;
-
 const Image = styled.img`
   width: 450px;
   height: 450px;
   object-fit: cover;
-  
 `;
-
 const InfoContainer = styled.div`
   flex: 1;
-  padding:50px 50px;
+  padding: 50px 50px;
 `;
-
 const Title = styled.h1`
-  font-weight: bolt;
-
+  font-weight: bold;
 `;
-
 const Desc = styled.p`
   margin: 20px 0px;
 `;
-
 const Price = styled.span`
-  font-weight: bolt;
+  font-weight: bold;
   font-size: 25px;
   padding-bottom: 20px;
 `;
-
 const Size = styled.h1`
-  font-weight: bolt;
+  font-weight: bold;
   font-size: 25px;
   padding-bottom: 20px;
 `;
-
-
 const AddContainer = styled.div`
   width: 50%;
   display: flex;
   align-items: center;
   justify-content: space-between;
- 
 `;
-
 const Button = styled.button`
   width: auto;
   border: none;
@@ -76,9 +60,33 @@ const Button = styled.button`
 `;
 
 const ProductPage = () => {
-
   const { id } = useParams();
+  const [userId, setUserId] = useState(null);
   const [product, setProduct] = useState(null);
+
+  const addToCart = async () => {
+    try {
+      const accessToken = localStorage.getItem("accessToken");
+      console.log(accessToken);
+      if (accessToken) {
+        const decodedToken = jwtDecode(accessToken);
+        const userid = decodedToken.id;
+       
+
+        const response = await axios.post(`http://localhost:3000/cart`, {
+        userId: userid,
+        productId: product._id, 
+      }, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`, 
+        },
+      });
+    }
+
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+    }
+  };
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -106,13 +114,12 @@ const ProductPage = () => {
             <Size>Size: {product.size}</Size>
             <Price>${product.price}</Price>
             <AddContainer>
-              <Button>ADD TO CART</Button>
+              <Button onClick={addToCart}>ADD TO CART</Button>
             </AddContainer>
           </InfoContainer>
         </Wrapper>
       )}
     </Container>
-
   );
 };
 
