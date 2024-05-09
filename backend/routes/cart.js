@@ -10,15 +10,32 @@ const {
 //CREATE
 //verificata
 router.post("/", verifyToken, async (req, res) => {
-  const newCart = new Cart(req.body);
-
   try {
-    const savedCart = await newCart.save();
+    const { userId, productId } = req.body;
+
+    let cart = await Cart.findOne({ userId });
+
+    if (!cart) {
+      cart = new Cart({ userId, products: [{ productId }] });
+    } else {
+      const existingProduct = cart.products.find(item => item.productId === productId);
+      
+      if (existingProduct) {
+        return res.status(400).json({ message: "Product already exists in the cart" });
+      } else {
+        cart.products.push({ productId });
+      }
+    }
+
+    const savedCart = await cart.save();
+
     res.status(200).json(savedCart);
   } catch (err) {
+    console.error("Error adding product to cart:", err);
     res.status(500).json(err);
   }
 });
+
 
 //UPDATE
 //verificata
@@ -52,6 +69,30 @@ router.delete(
       res.status(200).json("Cart has been deleted...");
     } catch (err) {
       res.status(500).json(err);
+    }
+  }
+);
+
+router.delete(
+  "/:userId/:productId",
+  async (req, res) => {
+    try {
+      const userId = req.params.userId;
+      const productId = req.params.productId;
+
+      const cart = await Cart.findOneAndUpdate(
+        { userId: userId },
+        { $pull: { products: { productId: productId } } },
+        { new: true }
+      );
+
+      if (!cart) {
+        return res.status(404).json({ message: "Cart not found" });
+      }
+
+      res.status(200).json({ message: "Product has been deleted from cart", cart: cart });
+    } catch (err) {
+      res.status(500).json({ message: err.message });
     }
   }
 );
