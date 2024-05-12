@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
-import axios from 'axios';
+import axios from "axios";
 import styled from "styled-components";
 import { jwtDecode } from "jwt-decode";
 import { Link } from "react-router-dom";
+import StripeCheckout from "react-stripe-checkout";
+
+const KEY = process.env.REACT_APP_STRIPE;
 
 const Container = styled.div``;
 
@@ -33,22 +36,22 @@ const TopButton = styled.button`
   color: ${(props) => props.type === "filled" && "white"};
 `;
 
-
 const StyledLink = styled(Link)`
   display: inline-block;
   padding: 10px;
   font-weight: 600;
   cursor: pointer;
-  border: ${(props) => props.type === "filled" ? "none" : "2px solid #6666cc"};
-  background-color: ${(props) => props.type === "filled" ? "#6666cc" : "transparent"};
-  color: ${(props) => props.type === "filled" ? "white" : "black"};
+  border: ${(props) =>
+    props.type === "filled" ? "none" : "2px solid #6666cc"};
+  background-color: ${(props) =>
+    props.type === "filled" ? "#6666cc" : "transparent"};
+  color: ${(props) => (props.type === "filled" ? "white" : "black")};
   text-decoration: none;
 `;
 
 const Bottom = styled.div`
   display: flex;
   justify-content: space-between;
-
 `;
 
 const Info = styled.div`
@@ -142,6 +145,18 @@ const DeleteButton = styled.button`
 const Cart = () => {
   const [cart, setCart] = useState([]);
   const [userId, setUserId] = useState(null);
+  const [stripeToken, setStripeToken] = useState(null);
+  const onToken = (token) => {
+    setStripeToken(token);
+  };
+
+  const calculateTotal = () => {
+    return (
+      cart.map((item) => item.price).reduce((acc, curr) => acc + curr, 0) + 5.9
+    );
+  };
+
+  const total = calculateTotal().toFixed(2);
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -150,38 +165,43 @@ const Cart = () => {
         if (accessToken) {
           const decodedToken = jwtDecode(accessToken);
           const userId = decodedToken.id;
-  
-          const response = await axios.get(`http://localhost:3000/cart/find/${userId}`);
+
+          const response = await axios.get(
+            `http://localhost:3000/cart/find/${userId}`
+          );
           const products = response.data.products;
-  
-          const productsWithDetails = await Promise.all(products.map(async (item) => {
-            const productResponse = await axios.get(`http://localhost:3000/products/${item.productId}`);
-            return {
-              ...item,
-              ...productResponse.data
-            };
-          }));
-  
+
+          const productsWithDetails = await Promise.all(
+            products.map(async (item) => {
+              const productResponse = await axios.get(
+                `http://localhost:3000/products/${item.productId}`
+              );
+              return {
+                ...item,
+                ...productResponse.data,
+              };
+            })
+          );
+
           setCart(productsWithDetails);
         }
       } catch (error) {
         console.error("Error fetching cart:", error);
       }
     };
-  
+
     fetchCart();
   }, []);
 
   const handleDeleteProduct = async (productId) => {
     try {
-        
-        const accessToken = localStorage.getItem("accessToken");
-        if (accessToken) {
-          const decodedToken = jwtDecode(accessToken);
-          const userId = decodedToken.id;
-          await axios.delete(`http://localhost:3000/cart/${userId}/${productId}`);
-          setCart(cart.filter(item => item.productId !== productId));
-        }
+      const accessToken = localStorage.getItem("accessToken");
+      if (accessToken) {
+        const decodedToken = jwtDecode(accessToken);
+        const userId = decodedToken.id;
+        await axios.delete(`http://localhost:3000/cart/${userId}/${productId}`);
+        setCart(cart.filter((item) => item.productId !== productId));
+      }
     } catch (error) {
       console.error("Error deleting product:", error);
     }
@@ -220,7 +240,11 @@ const Cart = () => {
                   </ProductDetail>
                   <PriceDetail>
                     <ProductPrice>$ {item.price}</ProductPrice>
-                    <DeleteButton onClick={() => handleDeleteProduct(item.productId)}>Delete</DeleteButton>
+                    <DeleteButton
+                      onClick={() => handleDeleteProduct(item.productId)}
+                    >
+                      Delete
+                    </DeleteButton>
                   </PriceDetail>
                 </Product>
                 <Hr />
@@ -231,7 +255,11 @@ const Cart = () => {
             <SummaryTitle>ORDER SUMMARY</SummaryTitle>
             <SummaryItem>
               <SummaryItemText>Subtotal</SummaryItemText>
-              <SummaryItemPrice>$ {cart.map((item) => item.price ).reduce((acc, curr) => acc + curr, 0)}
+              <SummaryItemPrice>
+                ${" "}
+                {cart
+                  .map((item) => item.price)
+                  .reduce((acc, curr) => acc + curr, 0)}
               </SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
@@ -240,9 +268,21 @@ const Cart = () => {
             </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText>Total</SummaryItemText>
-              <SummaryItemPrice>$ {(cart.map((item) => item.price ).reduce((acc, curr) => acc + curr, 0) + 5.90).toFixed(2)}</SummaryItemPrice>
+              <SummaryItemPrice>${total}</SummaryItemPrice>
             </SummaryItem>
-            <Button>CHECKOUT NOW</Button>
+            {/* <Button>CHECKOUT NOW</Button> */}
+            <StripeCheckout
+              name="Fancy Clothes"
+              image=""
+              billingAddress
+              shippingAddress
+              description={`Your total is ${total} ron`}
+              amount={total}
+              token={onToken}
+              stripeKey={KEY}
+            >
+              <Button>CHECKOUT NOW</Button>
+            </StripeCheckout>
           </Summary>
         </Bottom>
       </Wrapper>
