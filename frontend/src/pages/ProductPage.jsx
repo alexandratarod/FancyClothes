@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import Navbar from "../components/Navbar";
 import styled from "styled-components";
@@ -63,7 +63,7 @@ const ProductPage = () => {
   const { id } = useParams();
   const [userId, setUserId] = useState(null);
   const [product, setProduct] = useState(null);
-
+  const navigate = useNavigate(); 
   const addToCart = async () => {
     try {
       const accessToken = localStorage.getItem("accessToken");
@@ -71,18 +71,20 @@ const ProductPage = () => {
       if (accessToken) {
         const decodedToken = jwtDecode(accessToken);
         const userid = decodedToken.id;
-       
-
         const response = await axios.post(`http://localhost:3000/cart`, {
-        userId: userid,
-        productId: product._id, 
-      }, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`, 
-        },
-      });
-    }
+          userId: userid,
+          productId: product._id, 
+        }, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`, 
+          },
+        });
 
+        const updatedCartLength = parseInt(localStorage.getItem("cartLength") || 0) + 1;
+        localStorage.setItem("cartLength", updatedCartLength);
+
+        navigate("/products");
+      }
     } catch (error) {
       console.error("Error adding to cart:", error);
     }

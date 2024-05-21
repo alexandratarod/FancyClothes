@@ -71,14 +71,14 @@ const LinkStyled = styled(Link)`
 `;
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDm0AJFnnfz8brO8ysEgr2KVb4jI865xsU",
-  authDomain: "fancyclothes-3baa8.firebaseapp.com",
-  projectId: "fancyclothes-3baa8",
-  storageBucket: "fancyclothes-3baa8.appspot.com",
-  messagingSenderId: "391809455618",
-  appId: "1:391809455618:web:86b4b0adc087321860391b",
-  measurementId: "G-XLF7EXD4LM"
+  apiKey: "AIzaSyB-rwpuNWbLrWN4vL5uWbUkL11PsfevzSM",
+  authDomain: "fancyclothesic.firebaseapp.com",
+  projectId: "fancyclothesic",
+  storageBucket: "fancyclothesic.appspot.com",
+  messagingSenderId: "162868135705",
+  appId: "1:162868135705:web:e491d376bd95be7d14e788"
 };
+
 
 firebase.initializeApp(firebaseConfig);
 
@@ -95,14 +95,14 @@ const AddProduct = () => {
   useEffect(() => {
    
     const firebaseConfig = {
-      apiKey: "AIzaSyDm0AJFnnfz8brO8ysEgr2KVb4jI865xsU",
-      authDomain: "fancyclothes-3baa8.firebaseapp.com",
-      projectId: "fancyclothes-3baa8",
-      storageBucket: "fancyclothes-3baa8.appspot.com",
-      messagingSenderId: "391809455618",
-      appId: "1:391809455618:web:86b4b0adc087321860391b",
-      measurementId: "G-XLF7EXD4LM"
+      apiKey: "AIzaSyB-rwpuNWbLrWN4vL5uWbUkL11PsfevzSM",
+      authDomain: "fancyclothesic.firebaseapp.com",
+      projectId: "fancyclothesic",
+      storageBucket: "fancyclothesic.appspot.com",
+      messagingSenderId: "162868135705",
+      appId: "1:162868135705:web:e491d376bd95be7d14e788"
     };
+
     firebase.initializeApp(firebaseConfig);
   }, []);
 
