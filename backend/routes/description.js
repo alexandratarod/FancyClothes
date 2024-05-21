@@ -12,14 +12,14 @@ router.post("/generate-description", async (req, res) => {
     }
 
     
-    const message = `This ${title} features: ${labels.join(', ')}. Write a description for it.\n`;
+    const message = `This ${title} features: ${labels.join(', ')}. Write a marketing description for it.\n`;
 
     const response = await axios.post(
       "https://api.openai.com/v1/chat/completions",
       {
         model: "gpt-3.5-turbo-0613",
-        max_tokens: 100,
-        temperature: 1,
+        max_tokens: 150,
+        temperature: 0.7,
         stop: ["."],
         messages: [{ role: "system", content: message }]
       },

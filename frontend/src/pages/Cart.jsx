@@ -33,7 +33,6 @@ const TopButton = styled.button`
   color: ${(props) => props.type === "filled" && "white"};
 `;
 
-
 const StyledLink = styled(Link)`
   display: inline-block;
   padding: 10px;
@@ -174,22 +173,27 @@ const Cart = () => {
 
   const handleDeleteProduct = async (productId) => {
     try {
+      const accessToken = localStorage.getItem("accessToken");
+      if (accessToken) {
+        const decodedToken = jwtDecode(accessToken);
+        const userId = decodedToken.id;
+        await axios.delete(`http://localhost:3000/cart/${userId}/${productId}`);
         
-        const accessToken = localStorage.getItem("accessToken");
-        if (accessToken) {
-          const decodedToken = jwtDecode(accessToken);
-          const userId = decodedToken.id;
-          await axios.delete(`http://localhost:3000/cart/${userId}/${productId}`);
-          setCart(cart.filter(item => item.productId !== productId));
-        }
+        localStorage.setItem("cartLength", cart.length - 1);
+        
+        setCart(cart.filter(item => item.productId !== productId));
+      }
     } catch (error) {
       console.error("Error deleting product:", error);
     }
   };
+  
+
+  const cartTotal = cart.reduce((acc, item) => acc + item.price, 0);
+  const shippingCost = cartTotal > 0 ? 5.90 : 0;
+  
 
   localStorage.setItem("cartLength", cart.length);
-
-  console.log(cart);
 
   return (
     <Container>
@@ -231,16 +235,15 @@ const Cart = () => {
             <SummaryTitle>ORDER SUMMARY</SummaryTitle>
             <SummaryItem>
               <SummaryItemText>Subtotal</SummaryItemText>
-              <SummaryItemPrice>$ {cart.map((item) => item.price ).reduce((acc, curr) => acc + curr, 0)}
-              </SummaryItemPrice>
+              <SummaryItemPrice>$ {cartTotal.toFixed(2)}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Estimated Shipping</SummaryItemText>
-              <SummaryItemPrice>$ 5.90</SummaryItemPrice>
+              <SummaryItemPrice>$ {shippingCost.toFixed(2)}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText>Total</SummaryItemText>
-              <SummaryItemPrice>$ {(cart.map((item) => item.price ).reduce((acc, curr) => acc + curr, 0) + 5.90).toFixed(2)}</SummaryItemPrice>
+              <SummaryItemPrice>$ {(cartTotal + shippingCost).toFixed(2)}</SummaryItemPrice>
             </SummaryItem>
             <Button>CHECKOUT NOW</Button>
           </Summary>
@@ -249,5 +252,4 @@ const Cart = () => {
     </Container>
   );
 };
-
 export default Cart;

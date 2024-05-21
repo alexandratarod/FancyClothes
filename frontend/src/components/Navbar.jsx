@@ -82,7 +82,7 @@ const UserIconContainer = styled.div`
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
-  const [userId, setUserId] = useState(null); // Definirea userId în scopul mai larg
+  const [userId, setUserId] = useState(null); 
   const [cartLength, setCartLength] = useState(0);
 
   useEffect(() => {
@@ -97,8 +97,8 @@ const Navbar = () => {
       const accessToken = localStorage.getItem("accessToken");
       if (accessToken) {
         const decodedToken = jwtDecode(accessToken);
-        const id = decodedToken.id; // Salvarea ID-ului utilizatorului într-o stare
-        setUserId(id); // Actualizarea userId cu ID-ul utilizatorului
+        const id = decodedToken.id; 
+        setUserId(id); 
         if (decodedToken.exp * 1000 < Date.now()) {
           localStorage.removeItem("accessToken");
           navigate("/auth/login");
@@ -119,13 +119,14 @@ const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
+    localStorage.setItem("cartLength", 0);
     navigate("/auth/login");
   };
 
   const loggedIn = localStorage.getItem("accessToken");
 
   const handleProfileClick = () => {
-    navigate(`/user/${userId}`); // Utilizarea userId în handleClickProfile
+    navigate(`/user/${userId}`); 
   };
 
   const handleMyOrdersClick = () => {
@@ -165,6 +166,7 @@ const Navbar = () => {
                 onClose={handleMenuClose}
               >
                 <MenuItem onClick={handleProfileClick}>PROFILE</MenuItem>
+                <MenuItem component={NavLink} to="/products" onClick={handleMenuClose}>PRODUCTS</MenuItem>
                 <MenuItem onClick={handleMyOrdersClick}>MY ORDERS</MenuItem>
                 <MenuItem onClick={handleMenuClose}>MY SALES</MenuItem>
                 <MenuItem onClick={handleLogout}>LOGOUT</MenuItem>
