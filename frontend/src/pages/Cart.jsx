@@ -66,6 +66,7 @@ const ProductDetail = styled.div`
 
 const Image = styled.img`
   width: 200px;
+  padding: 10px;
 `;
 
 const Details = styled.div`
@@ -82,7 +83,6 @@ const ProductSize = styled.span``;
 const PriceDetail = styled.div`
   flex: 1;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
 `;
@@ -132,6 +132,7 @@ const Button = styled.button`
 
 const DeleteButton = styled.button`
   padding: 5px;
+  margin-left: 10px;
   background-color: #ff6347;
   color: white;
   border: none;
@@ -150,11 +151,11 @@ const Cart = () => {
           const decodedToken = jwtDecode(accessToken);
           const userId = decodedToken.id;
   
-          const response = await axios.get(`http://localhost:3000/cart/find/${userId}`);
+          const response = await axios.get(`https://fancyclothes.onrender.com/cart/find/${userId}`);
           const products = response.data.products;
   
           const productsWithDetails = await Promise.all(products.map(async (item) => {
-            const productResponse = await axios.get(`http://localhost:3000/products/${item.productId}`);
+            const productResponse = await axios.get(`https://fancyclothes.onrender.com/products/${item.productId}`);
             return {
               ...item,
               ...productResponse.data
@@ -177,7 +178,7 @@ const Cart = () => {
       if (accessToken) {
         const decodedToken = jwtDecode(accessToken);
         const userId = decodedToken.id;
-        await axios.delete(`http://localhost:3000/cart/${userId}/${productId}`);
+        await axios.delete(`https://fancyclothes.onrender.com/cart/${userId}/${productId}`);
         
         localStorage.setItem("cartLength", cart.length - 1);
         

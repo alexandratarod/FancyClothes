@@ -31,6 +31,13 @@ const Title = styled.h1`
   text-align: center;
 `;
 
+const Subtitle = styled.h1`
+  font-size: 16px;
+  font-weight: bold;
+  color: #ff6347;
+  text-align: center;
+`;
+
 const Form = styled.form`
   display: flex;
   flex-wrap: wrap;
@@ -113,7 +120,7 @@ const AddProduct = () => {
       await fileRef.put(img);
       const imageUrl = await fileRef.getDownloadURL();
 
-      const response = await axios.get('http://localhost:3000/labels/generate-labels', {
+      const response = await axios.get('https://fancyclothes.onrender.com/labels/generate-labels', {
         params: { imageUrl }
       });
 
@@ -134,7 +141,7 @@ const AddProduct = () => {
 
       console.log(generatedLabels);
 
-      const response = await axios.post('http://localhost:3000/chatgpt/generate-description', { labels: generatedLabels, title});
+      const response = await axios.post('https://fancyclothes.onrender.com/chatgpt/generate-description', { labels: generatedLabels, title});
 
       console.log("Description response:", response.data);
       setDescription(response.data.description);
@@ -177,7 +184,7 @@ const AddProduct = () => {
       };
 
       
-      const addProductResponse = await axios.post('http://localhost:3000/products/add-product', productData, config);
+      const addProductResponse = await axios.post('https://fancyclothes.onrender.com/products/add-product', productData, config);
 
       if (addProductResponse.status === 200) {
         setAdded(true);
@@ -200,6 +207,7 @@ const AddProduct = () => {
       <Container>
         <Wrapper>
           <Title>ADD A NEW PRODUCT</Title>
+          <Subtitle>Description for your product will be generated automatically! </Subtitle>
           <Form onSubmit={handleSubmit}>
             <Input
               type="text"

@@ -104,7 +104,7 @@ const ProductsPage = () => {
 
   const fetchMyProducts = (userId) => {
     axios
-      .get(`http://localhost:3000/products/my-products/${userId}`, config)
+      .get(`https://fancyclothes.onrender.com/products/my-products/${userId}`, config)
       .then((response) => {
         setProducts(response.data);
       })
@@ -116,7 +116,7 @@ const ProductsPage = () => {
 
   const fetchAllProducts = () => {
     axios
-      .get("http://localhost:3000/products")
+      .get("https://fancyclothes.onrender.com/products")
       .then((response) => {
         setProducts(response.data);
       })
@@ -129,7 +129,7 @@ const ProductsPage = () => {
   
   const handleDelete = (productId) => {
     axios
-      .delete(`http://localhost:3000/products/${productId}`, config)
+      .delete(`https://fancyclothes.onrender.com/products/${productId}`, config)
       .then(() => {
         if (selectedOption === "My Products" && userId) {
           fetchMyProducts(userId);

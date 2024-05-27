@@ -97,7 +97,7 @@ const MyOrdersPage = () => {
     if (userId) {
       const fetchMyOrders = () => {
         axios
-          .get(`http://localhost:3000/orders/find/${userId}`, config)
+          .get(`https://fancyclothes.onrender.com/orders/find/${userId}`, config)
           .then((response) => {
             setOrders(response.data);
           })
