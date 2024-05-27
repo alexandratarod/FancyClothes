@@ -157,7 +157,7 @@ const Order = () => {
           },
         };
         axios
-          .get(`http://localhost:3000/orders/${orderId}`, config)
+          .get(`https://fancyclothes.onrender.com/orders/${orderId}`, config)
           .then((response) => {
             setOrder(response.data);
           })
@@ -174,7 +174,7 @@ const Order = () => {
           },
         };
         axios
-          .get(`http://localhost:3000/orders/${orderId}/products`, config)
+          .get(`https://fancyclothes.onrender.com/orders/${orderId}/products`, config)
           .then((response) => {
             setProducts(response.data);
           })

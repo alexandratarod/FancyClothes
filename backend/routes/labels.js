@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const clarifai = require('clarifai');
 
-const clarifaiApp = new clarifai.App({ apiKey: 'e07c915482a0403aac624c258baa5e97' });
+const clarifaiApp = new clarifai.App({ apiKey: CLARIFAI_KEY });
 
 router.get('/generate-labels', async (req, res) => {
   try {

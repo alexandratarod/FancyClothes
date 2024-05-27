@@ -103,7 +103,7 @@ const Login = () => {
     
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:3000/auth/login", { email, password });
+      const res = await axios.post("https://fancyclothes.onrender.com/auth/login", { email, password });
       const accessToken = res.data.accessToken; 
       localStorage.setItem('accessToken', accessToken); 
       setIsLoggedIn(true); 

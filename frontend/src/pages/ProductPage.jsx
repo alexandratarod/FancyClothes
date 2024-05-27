@@ -3,7 +3,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import Navbar from "../components/Navbar";
 import styled from "styled-components";
-import { jwtDecode } from "jwt-decode";
 
 const Container = styled.div``;
 const Wrapper = styled.div`
@@ -38,6 +37,12 @@ const Size = styled.h1`
   font-size: 25px;
   padding-bottom: 20px;
 `;
+
+const AddedBy = styled.h1`
+  font-weight: bold;
+  font-size: 20px;
+  padding-bottom: 20px;
+`;
 const AddContainer = styled.div`
   width: 50%;
   display: flex;
@@ -61,18 +66,16 @@ const Button = styled.button`
 
 const ProductPage = () => {
   const { id } = useParams();
-  const [userId, setUserId] = useState(null);
   const [product, setProduct] = useState(null);
+  const [addedBy, setAddedBy] = useState('');
   const navigate = useNavigate(); 
+
   const addToCart = async () => {
     try {
       const accessToken = localStorage.getItem("accessToken");
-      console.log(accessToken);
       if (accessToken) {
-        const decodedToken = jwtDecode(accessToken);
-        const userid = decodedToken.id;
-        const response = await axios.post(`http://localhost:3000/cart`, {
-          userId: userid,
+        const response = await axios.post(`https://fancyclothes.onrender.com/cart`, {
+          userId: product.userId,
           productId: product._id, 
         }, {
           headers: {
@@ -93,7 +96,7 @@ const ProductPage = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/products/${id}`);
+        const response = await axios.get(`https://fancyclothes.onrender.com/products/${id}`, );
         setProduct(response.data);
       } catch (error) {
         console.error("Error fetching product:", error);
@@ -101,6 +104,32 @@ const ProductPage = () => {
     };
     fetchProduct();
   }, [id]);
+
+  useEffect(() => {
+    if (product) {
+      const getUserInfo = async (userId) => {
+        try {
+
+          const accessToken = localStorage.getItem('accessToken');
+        
+        if (!accessToken) {
+          console.error("Access token is missing from localStorage");
+          return;
+        }
+
+        const config = {
+            headers: { authorization: "Token " + accessToken }
+          };
+          const response = await axios.get(`https://fancyclothes.onrender.com/users/find/${userId}`, config);
+          setAddedBy(response.data.name);
+        } catch (error) {
+          console.error("Error fetching user information:", error);
+        }
+      };
+
+      getUserInfo(product.userId);
+    }
+  }, [product]);
 
   return (
     <Container>
@@ -114,6 +143,7 @@ const ProductPage = () => {
             <Title>{product.title}</Title>
             <Desc>{product.description}</Desc>
             <Size>Size: {product.size}</Size>
+            <AddedBy>Added by: {addedBy}</AddedBy>
             <Price>${product.price}</Price>
             <AddContainer>
               <Button onClick={addToCart}>ADD TO CART</Button>
