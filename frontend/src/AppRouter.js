@@ -11,6 +11,7 @@ import ProductsPage from "./pages/ProductsPage";
 import UpdateProductPage from "./pages/UpdateProductPage";
 import MyOrdersPage from "./pages/MyOrdersPage";
 import Order from "./pages/Order";
+import MySalesPage from "./pages/MySalesPage";
 
 const AppRouter = () => {
   return (
@@ -28,6 +29,7 @@ const AppRouter = () => {
         <Route path="/update-product/:id" element={<UpdateProductPage />} />
         <Route path="/orders/find/:id" element={<MyOrdersPage />} />
         <Route path="/orders/:id" element={<Order />} />
+        <Route path="/sales/:id" element={<MySalesPage />} />
       </Routes>
     </BrowserRouter>
   );

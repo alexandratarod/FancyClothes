@@ -173,4 +173,15 @@ router.put("/purchase/:userId", async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+router.get("/purchased-products/:userId", async (req, res) => {
+  const userId = req.params.userId;
+
+  try {
+    const purchasedProducts = await Product.find({ userId: userId, purchased: true });
+    res.status(200).json(purchasedProducts);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 module.exports = router;

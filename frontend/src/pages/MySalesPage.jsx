@@ -1,9 +1,9 @@
-import { jwtDecode } from "jwt-decode";
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import styled from "styled-components";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 const Container = styled.div`
   background: linear-gradient(
@@ -131,81 +131,38 @@ const SummaryItemText = styled.span``;
 
 const SummaryItemPrice = styled.span``;
 
-const Order = () => {
-  const { id: orderId } = useParams(); // Preluarea id-ului din URL
-  const [userId, setUserId] = useState(null);
-  const [order, setOrder] = useState([]);
-  const [products, setProducts] = useState([]);
+const MySalesPage = () => {
+  const { userId } = useParams();
+  const [purchasedProducts, setPurchasedProducts] = useState([]);
 
   useEffect(() => {
-    const checkAccessToken = () => {
-      const accessToken = localStorage.getItem("accessToken");
-      if (accessToken) {
+    const fetchPurchasedProducts = async () => {
+      try {
+        const accessToken = localStorage.getItem("accessToken");
         const decodedToken = jwtDecode(accessToken);
-        const id = decodedToken.id;
-        setUserId(id);
-        if (decodedToken.exp * 1000 < Date.now()) {
-          localStorage.removeItem("accessToken");
-          setUserId(null); // Reset userId if the token has expired
-        }
+        const userId = decodedToken.id;
+        const response = await axios.get(`http://localhost:3000/products/purchased-products/${userId}`);
+        setPurchasedProducts(response.data);
+        
+      } catch (error) {
+        console.log("Error fetching user purchased products", error);
+        setPurchasedProducts([]);
       }
     };
 
-    checkAccessToken();
-  }, []);
-
-  useEffect(() => {
-    if (userId) {
-      const fetchMyOrder = () => {
-        const config = {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          },
-        };
-        axios
-          .get(`http://localhost:3000/orders/${orderId}`, config)
-          .then((response) => {
-            setOrder(response.data);
-          })
-          .catch((error) => {
-            console.log("Error fetching user order", error);
-            setOrder(null);
-          });
-      };
-
-      const fetchMyProducts = () => {
-        const config = {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          },
-        };
-        axios
-          .get(`http://localhost:3000/orders/${orderId}/products`, config)
-          .then((response) => {
-            setProducts(response.data);
-          })
-          .catch((error) => {
-            console.log("Error fetching user order", error);
-            setProducts(null);
-          });
-      };
-
-      fetchMyOrder();
-      fetchMyProducts();
-    }
+    fetchPurchasedProducts();
   }, [userId]);
 
-  console.log(order);
-
+  console.log(purchasedProducts);
   return (
     <div>
       <Navbar />
       <Container>
         <Wrapper>
-          <Title>YOUR ORDER</Title>
+          <Title>YOUR SALES</Title>
           <Bottom>
             <Info>
-              {products?.map((product, index) => (
+              {purchasedProducts.map((product, index) => (
                 <div key={index}>
                   <Product>
                     <ProductDetail>
@@ -215,7 +172,7 @@ const Order = () => {
                           <b>Product:</b> {product?.title}
                         </ProductName>
                         <ProductId>
-                        <b>SIZE:</b> {product?.size}
+                          <b>SIZE:</b> {product?.size}
                         </ProductId>
                       </Details>
                     </ProductDetail>
@@ -223,28 +180,15 @@ const Order = () => {
                       <ProductPrice>${product?.price}</ProductPrice>
                     </PriceDetail>
                   </Product>
-                  {index < products.length - 1 && <Hr />}{" "}
-                  
+                  {index < purchasedProducts.length - 1 && <Hr />}{" "}
                 </div>
               ))}
             </Info>
-            <Summary>
-              <SummaryTitle>ORDER SUMMARY</SummaryTitle>
-              <SummaryItem>
-                <SummaryItemText>Status</SummaryItemText>
-                <SummaryItemPrice>{order?.status}</SummaryItemPrice>
-              </SummaryItem>
-              <SummaryItem type="total">
-                <SummaryItemText>Total</SummaryItemText>
-                <SummaryItemPrice>${order?.amount} </SummaryItemPrice>
-              </SummaryItem>
-            </Summary>
           </Bottom>
         </Wrapper>
       </Container>
-      );
     </div>
   );
 };
 
-export default Order;
+export default MySalesPage;
