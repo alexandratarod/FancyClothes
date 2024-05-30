@@ -97,7 +97,7 @@ const MyOrdersPage = () => {
     if (userId) {
       const fetchMyOrders = () => {
         axios
-          .get(`https://fancyclothes.onrender.com/orders/find/${userId}`, config)
+          .get(`http://localhost:3000/orders/find/${userId}`, config)
           .then((response) => {
             setOrders(response.data);
           })
@@ -126,7 +126,6 @@ const MyOrdersPage = () => {
               <tr>
                 <StyledTh>#</StyledTh>
                 <StyledTh>Amount</StyledTh>
-                <StyledTh>Address</StyledTh>
                 <StyledTh>Status</StyledTh>
                 <StyledTh>Created At</StyledTh>
                 <StyledTh>Action</StyledTh>
@@ -137,7 +136,6 @@ const MyOrdersPage = () => {
                 <StyledTr key={index}>
                   <StyledTd>{index + 1}</StyledTd>
                   <StyledTd>{order.amount}</StyledTd>
-                  <StyledTd>{order.address}</StyledTd>
                   <StyledTd>{order.status}</StyledTd>
                   <StyledTd>{order.createdAt.substring(0, 10)}</StyledTd>
                   <StyledTd>

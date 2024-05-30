@@ -127,4 +127,50 @@ router.get("/my-products/:id", verifyToken, async (req, res) => {
   }
 });
 
+
+router.put("/:id/inCart", async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const { inCart } = req.body;
+
+    
+    const product = await Product.findById(productId);
+
+    if (!product) {
+      return res.status(404).json({ message: "Produsul nu a fost găsit." });
+    }
+
+    
+    product.inCart = inCart;
+
+   
+    await product.save();
+
+    res.status(200).json({ message: "Starea inCart a produsului a fost actualizată cu succes." });
+  } catch (error) {
+    console.error("Eroare la actualizarea stării inCart a produsului:", error);
+    res.status(500).json({ message: "Eroare la actualizarea stării inCart a produsului." });
+  }
+});
+
+router.put("/purchase/:userId", async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const cartItems = req.body.cartItems;
+
+    await Promise.all(
+      cartItems.map(async (item) => {
+        await Product.findByIdAndUpdate(
+          item.productId,
+          { $set: { purchased: true } },
+          { new: true }
+        );
+      })
+    );
+
+    res.status(200).json({ message: "Products updated to purchased" });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 module.exports = router;

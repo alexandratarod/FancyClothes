@@ -100,7 +100,7 @@ const UpdateProductPage = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`https://fancyclothes.onrender.com/products/${id}`);
+        const response = await axios.get(`http://localhost:3000/products/${id}`);
         setProduct(response.data);
         setTitle(response.data.title);
         setSize(response.data.size);
@@ -155,7 +155,7 @@ const UpdateProductPage = () => {
         imgUrl=img
       } 
      
-      await axios.put(`https://fancyclothes.onrender.com/products/${id}`, { title, size, price, img: imgUrl}, config);
+      await axios.put(`http://localhost:3000/products/${id}`, { title, size, price, img: imgUrl}, config);
   
       setSuccessMessage("Product updated successfully!");
     } catch (error) {

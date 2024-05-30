@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import Navbar from "../components/Navbar";
 import styled from "styled-components";
+import { jwtDecode } from "jwt-decode";
 
 const Container = styled.div``;
 const Wrapper = styled.div`
@@ -31,13 +32,21 @@ const Price = styled.span`
   font-weight: bold;
   font-size: 25px;
   padding-bottom: 20px;
+  position: relative;
+`;
+const UnavailableMessage = styled.span`
+  position: absolute;
+  padding-top: 10px;
+  top: -25px;
+  right: 0;
+  font-size: 14px;
+  color: red;
 `;
 const Size = styled.h1`
   font-weight: bold;
   font-size: 25px;
   padding-bottom: 20px;
 `;
-
 const AddedBy = styled.h1`
   font-weight: bold;
   font-size: 20px;
@@ -54,28 +63,34 @@ const Button = styled.button`
   border: none;
   padding: 20px 20px;
   margin-top: 20px;
-  background-color: #6666CC;
-  color: white;
+  background-color: ${props => props.disabled ? '#CCCCCC' : '#6666CC'};
+  color: ${props => props.disabled ? '#888888' : 'white'};
   font-weight: bold;
   cursor: pointer;
-  margin-bottom: 10px; 
+  margin-bottom: 10px;
   &:hover {
-    background-color: #6699FF; 
+    background-color: ${props => props.disabled ? '#CCCCCC' : '#6699FF'}; 
   }
-`;
+
+  `;
 
 const ProductPage = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [addedBy, setAddedBy] = useState('');
+  const [inCart, setInCart] = useState(false); 
   const navigate = useNavigate(); 
 
   const addToCart = async () => {
     try {
       const accessToken = localStorage.getItem("accessToken");
       if (accessToken) {
-        const response = await axios.post(`https://fancyclothes.onrender.com/cart`, {
-          userId: product.userId,
+        const decodedToken = jwtDecode(accessToken);
+        const userId = decodedToken.id;
+        console.log(userId);
+
+        const response = await axios.post(`http://localhost:3000/cart`, {
+          userId: userId,
           productId: product._id, 
         }, {
           headers: {
@@ -86,6 +101,11 @@ const ProductPage = () => {
         const updatedCartLength = parseInt(localStorage.getItem("cartLength") || 0) + 1;
         localStorage.setItem("cartLength", updatedCartLength);
 
+        
+        setInCart(true); 
+        
+        await axios.put(`http://localhost:3000/products/${product._id}/inCart`, { inCart: true });
+        
         navigate("/products");
       }
     } catch (error) {
@@ -96,8 +116,10 @@ const ProductPage = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`https://fancyclothes.onrender.com/products/${id}`, );
+        const response = await axios.get(`http://localhost:3000/products/${id}`);
         setProduct(response.data);
+        
+        setInCart(response.data.inCart); 
       } catch (error) {
         console.error("Error fetching product:", error);
       }
@@ -109,18 +131,17 @@ const ProductPage = () => {
     if (product) {
       const getUserInfo = async (userId) => {
         try {
-
           const accessToken = localStorage.getItem('accessToken');
         
-        if (!accessToken) {
-          console.error("Access token is missing from localStorage");
-          return;
-        }
+          if (!accessToken) {
+            console.error("Access token is missing from localStorage");
+            return;
+          }
 
-        const config = {
+          const config = {
             headers: { authorization: "Token " + accessToken }
           };
-          const response = await axios.get(`https://fancyclothes.onrender.com/users/find/${userId}`, config);
+          const response = await axios.get(`http://localhost:3000/users/find/${userId}`, config);
           setAddedBy(response.data.name);
         } catch (error) {
           console.error("Error fetching user information:", error);
@@ -144,9 +165,12 @@ const ProductPage = () => {
             <Desc>{product.description}</Desc>
             <Size>Size: {product.size}</Size>
             <AddedBy>Added by: {addedBy}</AddedBy>
-            <Price>${product.price}</Price>
+            <Price>
+              {inCart && <UnavailableMessage>Unavailable</UnavailableMessage>}
+              ${product.price}
+            </Price>
             <AddContainer>
-              <Button onClick={addToCart}>ADD TO CART</Button>
+              <Button onClick={addToCart} disabled={inCart}>ADD TO CART</Button>
             </AddContainer>
           </InfoContainer>
         </Wrapper>

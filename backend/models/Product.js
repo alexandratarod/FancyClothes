@@ -25,6 +25,18 @@ const ProductSchema = new mongoose.Schema(
     },
     size: {
       type: String,
+    },
+    inCart:
+    {
+      type:Boolean,
+      default: false
+
+    },
+    purchased:
+    {
+      type:Boolean,
+      default: false
+
     }
   },
   { timestamps: true }
