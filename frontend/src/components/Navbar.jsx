@@ -9,7 +9,7 @@ const Container = styled.div`
   height: 50px;
   border-bottom: 1px solid lightgray;
 
-  @media only screen and (max-width: 380px) {
+  @media only screen and (max-width: 576px) {
     height: 40px;
   }
 `;
@@ -33,7 +33,7 @@ const Logo = styled.h1`
   font-size: 24px;
   cursor: pointer;
 
-  @media only screen and (max-width: 380px) {
+  @media only screen and (max-width: 576px) {
     font-size: 12px;
   }
 `;
@@ -51,7 +51,7 @@ const MyMenuItem = styled.div`
   cursor: pointer;
   margin-right: 10px;
 
-  @media only screen and (max-width: 380px) {
+  @media only screen and (max-width: 576px) {
     font-size: 12px;
     margin-right: 5px;
   }
@@ -68,7 +68,7 @@ const UserIconContainer = styled.div`
   margin-right: 10px;
   margin-top: 2px;
 
-  @media only screen and (max-width: 380px) {
+  @media only screen and (max-width: 576px) {
     font-size: 18px;
     margin-right: 5px;
   }

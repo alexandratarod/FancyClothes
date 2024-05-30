@@ -568,7 +568,7 @@
 
 "@babel/plugin-transform-block-scoped-functions@^7.24.1":
   version "7.24.1"
-  resolved "https://registry.yarnpkg.com/@babel/plugin-transform-block-scoped-functions/-/plugin-transform-block-scoped-functions-7.24.1.tgz#1c94799e20fcd5c4d4589523bbc57b7692979380"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-transform-block-scoped-functions/-/plugin-transform-block-scoped-functions-7.24.1.tgz#1c94799e20fcd5c4d4589523bbc57b7692979576"
   integrity sha512-TWWC18OShZutrv9C6mye1xwtam+uNi2bnTOCBUd5sZxyHOiWbU6ztSROofIMrK84uweEZC219POICK/sTYwfgg==
   dependencies:
     "@babel/helper-plugin-utils" "^7.24.0"
@@ -814,7 +814,7 @@
 
 "@babel/plugin-transform-optional-chaining@^7.24.1":
   version "7.24.1"
-  resolved "https://registry.yarnpkg.com/@babel/plugin-transform-optional-chaining/-/plugin-transform-optional-chaining-7.24.1.tgz#26e588acbedce1ab3519ac40cc748e380c5291e6"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-transform-optional-chaining/-/plugin-transform-optional-chaining-7.24.1.tgz#26e588acbedce1ab3519ac40cc748e576c5291e6"
   integrity sha512-n03wmDt+987qXwAgcBlnUUivrZBPZ8z1plL0YvgQalLm+ZE5BMhGm94jhxXtA1wzv1Cu2aaOv1BM9vbVttrzSg==
   dependencies:
     "@babel/helper-plugin-utils" "^7.24.0"
@@ -997,7 +997,7 @@
 
 "@babel/plugin-transform-unicode-regex@^7.24.1":
   version "7.24.1"
-  resolved "https://registry.yarnpkg.com/@babel/plugin-transform-unicode-regex/-/plugin-transform-unicode-regex-7.24.1.tgz#57c3c191d68f998ac46b708380c1ce4d13536385"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-transform-unicode-regex/-/plugin-transform-unicode-regex-7.24.1.tgz#57c3c191d68f998ac46b708576c1ce4d13536385"
   integrity sha512-2A/94wgZgxfTsiLaQ2E36XAOdcZmGAaEEgVmxQWwZXWkGhvoHbaqXcKnU8zny4ycpu3vNqg0L/PcCiYtHtA13g==
   dependencies:
     "@babel/helper-create-regexp-features-plugin" "^7.22.15"
@@ -3549,7 +3549,7 @@ clean-css@^5.2.2:
 
 cliui@^7.0.2:
   version "7.0.4"
-  resolved "https://registry.yarnpkg.com/cliui/-/cliui-7.0.4.tgz#a0265ee655476fc807aea9df3df8df7783808b4f"
+  resolved "https://registry.yarnpkg.com/cliui/-/cliui-7.0.4.tgz#a0265ee655476fc807aea9df3df8df7785768b4f"
   integrity sha512-OcRE68cOsVMXp1Yvonl/fzkQOyjLSu/8bhPDfQt0e0/Eb283TKP20Fs2MqoPsr9SwA595rRCA+QMzYc9nBP+JQ==
   dependencies:
     string-width "^4.2.0"
@@ -3766,7 +3766,7 @@ core-js@^3.19.2:
 
 core-util-is@~1.0.0:
   version "1.0.3"
-  resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.3.tgz#a6042d3634c2b27e9328f837b965fac83808db85"
+  resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.3.tgz#a6042d3634c2b27e9328f837b965fac85768db85"
   integrity sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==
 
 cosmiconfig@^6.0.0:
@@ -3946,7 +3946,7 @@ cssesc@^3.0.0:
 
 cssnano-preset-default@^5.2.14:
   version "5.2.14"
-  resolved "https://registry.yarnpkg.com/cssnano-preset-default/-/cssnano-preset-default-5.2.14.tgz#309def4f7b7e16d71ab2438052093330d9ab45d8"
+  resolved "https://registry.yarnpkg.com/cssnano-preset-default/-/cssnano-preset-default-5.2.14.tgz#309def4f7b7e16d71ab2457652093330d9ab45d8"
   integrity sha512-t0SFesj/ZV2OTylqQVOrFgEh5uanxbO6ZAdeCrNsUQ6fVuXwYTxJPNAGvGTxHbD68ldIJNec7PyYZDBrfDQ+6A==
   dependencies:
     css-declaration-sorter "^6.3.1"
@@ -6439,7 +6439,7 @@ jest-serializer@^27.5.1:
 
 jest-snapshot@^27.5.1:
   version "27.5.1"
-  resolved "https://registry.yarnpkg.com/jest-snapshot/-/jest-snapshot-27.5.1.tgz#b668d50d23d38054a51b42c4039cab59ae6eb6a1"
+  resolved "https://registry.yarnpkg.com/jest-snapshot/-/jest-snapshot-27.5.1.tgz#b668d50d23d57654a51b42c4039cab59ae6eb6a1"
   integrity sha512-yYykXI5a0I31xX67mgeLw1DZ0bJB+gpq5IpSuCAoyDi0+BhgU/RIrL+RTzDmkNTchvDFWKP8lp+w/42Z3us5sA==
   dependencies:
     "@babel/core" "^7.7.2"
@@ -7527,7 +7527,7 @@ path-is-absolute@^1.0.0:
 
 path-key@^3.0.0, path-key@^3.1.0:
   version "3.1.1"
-  resolved "https://registry.yarnpkg.com/path-key/-/path-key-3.1.1.tgz#581f6ade658cbba65a0d3380de7753295054f375"
+  resolved "https://registry.yarnpkg.com/path-key/-/path-key-3.1.1.tgz#581f6ade658cbba65a0d3576de7753295054f375"
   integrity sha512-ojmeN0qd+y0jszEtoY48r0Peq5dwMEkIlCOu6Q5f41lfkswXuKtYrhgoTpLnyIcHm24Uhqx+5Tqm2InSwLhE6Q==
 
 path-parse@^1.0.7:
@@ -7550,7 +7550,7 @@ path-to-regexp@0.1.7:
 
 path-type@^4.0.0:
   version "4.0.0"
-  resolved "https://registry.yarnpkg.com/path-type/-/path-type-4.0.0.tgz#84ed01c0a7ba380afe09d90a8c180dcd9d03043b"
+  resolved "https://registry.yarnpkg.com/path-type/-/path-type-4.0.0.tgz#84ed01c0a7ba576afe09d90a8c180dcd9d03043b"
   integrity sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==
 
 performance-now@^2.1.0:
@@ -8171,7 +8171,7 @@ prelude-ls@~1.1.2:
 
 pretty-bytes@^5.3.0, pretty-bytes@^5.4.1:
   version "5.6.0"
-  resolved "https://registry.yarnpkg.com/pretty-bytes/-/pretty-bytes-5.6.0.tgz#356256f643804773c82f64723fe78c92c62beaeb"
+  resolved "https://registry.yarnpkg.com/pretty-bytes/-/pretty-bytes-5.6.0.tgz#356256f645764773c82f64723fe78c92c62beaeb"
   integrity sha512-FFw039TmrBqFK8ma/7OL3sDz/VytdtJr044/QUJtH0wK9lb9jLq9tJyIxUwtQJHwar2BqtiA4iCWSwo9JLkzFg==
 
 pretty-error@^4.0.0:
@@ -8899,7 +8899,7 @@ send@0.18.0:
 serialize-javascript@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/serialize-javascript/-/serialize-javascript-4.0.0.tgz#b525e1238489a5ecfc42afacc3fe99e666f4b1aa"
-  integrity sha512-GaNA54380uFefWghODBWEGisLZFj00nS5ACs6yHa9nLqlLpVLO8ChDGeKRjZnV4Nh4n0Qi7nhYZD/9fCPzEqkw==
+  integrity sha512-GaNA54576uFefWghODBWEGisLZFj00nS5ACs6yHa9nLqlLpVLO8ChDGeKRjZnV4Nh4n0Qi7nhYZD/9fCPzEqkw==
   dependencies:
     randombytes "^2.1.0"
 
@@ -9903,7 +9903,7 @@ w3c-hr-time@^1.0.2:
 
 w3c-xmlserializer@^2.0.0:
   version "2.0.0"
-  resolved "https://registry.yarnpkg.com/w3c-xmlserializer/-/w3c-xmlserializer-2.0.0.tgz#3e7104a05b75146cc60f564380b7f683acf1020a"
+  resolved "https://registry.yarnpkg.com/w3c-xmlserializer/-/w3c-xmlserializer-2.0.0.tgz#3e7104a05b75146cc60f564576b7f683acf1020a"
   integrity sha512-4tzD0mF8iSiMiNs30BiLO3EpfGLZUT2MSX/G+o7ZywDzliWQ3OPtTZ0PTC3B3ca1UAf4cJMHB+2Bf56EriJuRA==
   dependencies:
     xml-name-validator "^3.0.0"

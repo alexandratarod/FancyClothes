@@ -26,7 +26,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   
 
-  @media only screen and (min-width: 380px) {
+  @media only screen and (min-width: 576px) {
     padding: 30px;
     flex-direction: row;
   }
@@ -40,7 +40,7 @@ const InfoContainer = styled.div`
   margin-bottom: 20px;
   text-align: center;
 
-  @media only screen and (min-width: 380px) {
+  @media only screen and (min-width: 576px) {
     margin-bottom: 0px;
     margin-left: 20px;
     display: flex;
@@ -60,7 +60,7 @@ const Title = styled.h1`
   text-align: center;
   margin-bottom: 20px;
 
-  @media only screen and(max-width: 380px) {
+  @media only screen and(max-width: 576px) {
     font-size: 24px;
   }
 `;
@@ -76,7 +76,7 @@ const Input = styled.input`
   margin-bottom: 20px;
   text-align: center;
 
-  @media only screen and (min-width: 380px) {
+  @media only screen and (min-width: 576px) {
     width: 100%;
   }
 `;

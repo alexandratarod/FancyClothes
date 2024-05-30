@@ -14,7 +14,7 @@ const Container = styled.div``;
 const Wrapper = styled.div`
   padding: 20px;
 
-  @media only screen and (max-width: 380px) {
+  @media only screen and (max-width: 576px) {
     padding: 10px;
    }
 `;
@@ -58,14 +58,14 @@ const Bottom = styled.div`
   display: flex;
   justify-content: space-between;
 
-  @media only screen and (max-width: 380px) {
+  @media only screen and (max-width: 576px) {
     flex-direction:column;
    }
 `;
 
 const Info = styled.div`
   flex: 3;
-  @media only screen and (max-width: 380px) {
+  @media only screen and (max-width: 576px) {
     flex-direction:column;
    }
 `;
@@ -74,7 +74,7 @@ const Product = styled.div`
   display: flex;
   justify-content: space-between;
 
-  @media only screen and (max-width: 380px) {
+  @media only screen and (max-width: 576px) {
     flex-direction:column;
    }
 `;
@@ -83,7 +83,7 @@ const ProductDetail = styled.div`
   flex: 2;
   display: flex;
 
-  @media only screen and (max-width: 380px) {
+  @media only screen and (max-width: 576px) {
     flex-direction:column;
    }
 `;
@@ -111,7 +111,7 @@ const PriceDetail = styled.div`
   align-items: center;
   justify-content: center;
 
-  @media only screen and (max-width: 380px) {
+  @media only screen and (max-width: 576px) {
     flex-direction:column;
    }
 `;
@@ -120,7 +120,7 @@ const ProductPrice = styled.div`
   font-size: 30px;
   font-weight: 200;
 
-  @media only screen and (max-width: 380px) {
+  @media only screen and (max-width: 576px) {
     margin-bottom:20px;
    }
 `;

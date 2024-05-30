@@ -15,7 +15,7 @@ const Container = styled.div`
   background-size: cover;
   padding-top: 50px;
 
-  @media only screen and (max-width: 380px) {
+  @media only screen and (max-width: 576px) {
     height: 100vh;
     padding-top: 20px;
   }
@@ -32,7 +32,7 @@ const Title = styled.h1`
   font-weight: bold;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 
-  @media only screen and (max-width: 380px) {
+  @media only screen and (max-width: 576px) {
     font-size: 20px;
   }
 `;
@@ -42,7 +42,7 @@ const Description = styled.p`
   font-weight: bold;
   margin-top: 20px;
 
-  @media only screen and (max-width: 380px) {
+  @media only screen and (max-width: 576px) {
     font-size: 14px;
   }
 `;
@@ -63,7 +63,7 @@ const StyledNavLink = styled(NavLink)`
     background-color: #f0f0f0;
   }
 
-  @media only screen and (max-width: 380px) {
+  @media only screen and (max-width: 576px) {
     font-size: 16px;
   }
 `;

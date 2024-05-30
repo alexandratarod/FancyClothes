@@ -25,7 +25,7 @@ const Wrapper = styled.div`
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 20px;
 
-  @media only screen and (max-width: 380px) {
+  @media only screen and (max-width: 576px) {
     grid-template-columns: 1fr;
     padding: 20px;
   }
@@ -37,7 +37,7 @@ const InfoContainer = styled.div`
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.8);
 
-  @media only screen and (max-width: 380px) {
+  @media only screen and (max-width: 576px) {
     padding: 20px;
   }
 `;
@@ -47,7 +47,7 @@ const Title = styled.h1`
   text-align: center;
   font-size: 24px;
 
-  @media only screen and (max-width: 380px) {
+  @media only screen and (max-width: 576px) {
     font-size: 20px;
   }
 `;
@@ -62,7 +62,7 @@ const Input = styled.input`
   padding: 10px;
   margin-bottom: 20px;
 
-  @media only screen and (max-width: 380px) {
+  @media only screen and (max-width: 576px) {
     padding: 8px;
   }
 `;
@@ -82,7 +82,7 @@ const Button = styled.button`
     background-color: #6699FF; 
   }
 
-  @media only screen and (max-width: 380px) {
+  @media only screen and (max-width: 576px) {
     width: 100%;
     padding: 15px;
   }
@@ -92,7 +92,7 @@ const UserInfo = styled.div`
   margin-top: 20px;
   font-weight: bold;
 
-  @media only screen and (max-width: 380px) {
+  @media only screen and (max-width: 576px) {
     font-size: 14px;
   }
 `;
@@ -104,7 +104,7 @@ const Message = styled.div`
   text-align: center;
   margin-top: 20px;
 
-  @media only screen and (max-width: 380px) {
+  @media only screen and (max-width: 576px) {
     padding: 8px;
     margin-top: 15px;
   }
@@ -117,7 +117,7 @@ const ErrorMessage = styled.div`
   text-align: center;
   margin-top: 20px;
 
-  @media only screen and (max-width: 380px) {
+  @media only screen and (max-width: 576px) {
     padding: 8px;
     margin-top: 15px;
   }

@@ -13,7 +13,7 @@ const Wrapper = styled.div`
   align-items: center;
   text-align: center;
   
-  @media only screen and (min-width: 380px) {
+  @media only screen and (min-width: 576px) {
     padding: 50px;
     flex-direction: row;
   }
@@ -22,7 +22,7 @@ const ImgContainer = styled.div`
   width: 100%;
   margin-bottom: 20px;
 
-  @media only screen and (min-width: 380px) {
+  @media only screen and (min-width: 576px) {
     width: 50%;
     margin-bottom: 0px;
   }
@@ -33,14 +33,14 @@ const Image = styled.img`
   max-height: 300px;
   object-fit: cover;
 
-  @media only screen and (min-width: 380px) {
+  @media only screen and (min-width: 576px) {
     max-height: 450px;
   }
 `;
 const InfoContainer = styled.div`
   width: 100%;
 
-  @media only screen and (min-width: 380px) {
+  @media only screen and (min-width: 576px) {
     width: 50%;
     padding: 0px 50px;
     text-align: left;
@@ -77,7 +77,7 @@ const AddedBy = styled.h2`
 const AddContainer = styled.div`
   width: 100%;
 
-  @media only screen and (min-width: 380px) {
+  @media only screen and (min-width: 576px) {
     width: auto;
   }
 `;
@@ -90,7 +90,7 @@ const Button = styled.button`
   font-weight: bold;
   cursor: pointer;
 
-  @media only screen and (min-width: 380px) {
+  @media only screen and (min-width: 576px) {
     width: auto;
   }
 

@@ -25,7 +25,7 @@ const Wrapper = styled.div`
   background-color: white;
   border-radius: 10px;
 
-  @media only screen and (max-width: 380px) {
+  @media only screen and (max-width: 576px) {
     width: 60%;
    }
 `;

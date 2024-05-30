@@ -18,7 +18,7 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
 
-  @media only screen and (max-width: 380px) {
+  @media only screen and (max-width: 576px) {
     padding: 10px;
   }
 `;
@@ -29,7 +29,7 @@ const Title = styled.h1`
   font-weight: bold;
   text-align: center;
 
-  @media only screen and (max-width: 380px) {
+  @media only screen and (max-width: 576px) {
     font-size: 24px;
   }
 `;
@@ -41,7 +41,7 @@ const StyledTable = styled.table`
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin-top: 20px;
 
-  @media only screen and (max-width: 380px) {
+  @media only screen and (max-width: 576px) {
     display: block;
     width: 100%;
   }
@@ -54,7 +54,7 @@ const StyledTh = styled.th`
   padding: 12px 15px;
   border-bottom: 2px solid #ccc;
 
-  @media only screen and (max-width: 380px) {
+  @media only screen and (max-width: 576px) {
     display: none;
   }
 `;
@@ -64,7 +64,7 @@ const StyledTd = styled.td`
   border-bottom: 1px solid #eee;
   word-wrap: break-word; /* Adaugăm linie nouă pentru a asigura că textul se încadrează pe celulă */
 
-  @media only screen and (max-width: 380px) {
+  @media only screen and (max-width: 576px) {
     display: block;
     padding: 8px 10px;
     position: relative;
@@ -85,7 +85,7 @@ const StyledTr = styled.tr`
     background-color: #f1f1f1;
   }
 
-  @media only screen and (max-width: 380px) {
+  @media only screen and (max-width: 576px) {
     display: block;
     margin-bottom: 10px;
     background: white;
@@ -108,7 +108,7 @@ const ViewButton = styled.button`
     background-color: #45a049;
   }
 
-  @media only screen and (max-width: 380px) {
+  @media only screen and (max-width: 576px) {
     padding: 5px 10px;
     font-size: 14px;
   }

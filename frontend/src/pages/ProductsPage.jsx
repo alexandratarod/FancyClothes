@@ -38,7 +38,7 @@ const AddProductButton = styled(NavLink)`
   font-size: 20px;
   font-weight: bold;
 
-  @media only screen and (max-width: 380px) {
+  @media only screen and (max-width: 576px) {
     font-size:15px;
    }
 `;
