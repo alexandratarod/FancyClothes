@@ -24,17 +24,32 @@ const Wrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 20px;
+
+  @media only screen and (max-width: 380px) {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
 `;
 
 const InfoContainer = styled.div`
   flex: 1;
   padding: 50px;
   border-radius: 10px;
+  background: rgba(255, 255, 255, 0.8);
+
+  @media only screen and (max-width: 380px) {
+    padding: 20px;
+  }
 `;
 
 const Title = styled.h1`
   font-weight: bold;
   text-align: center;
+  font-size: 24px;
+
+  @media only screen and (max-width: 380px) {
+    font-size: 20px;
+  }
 `;
 
 const Label = styled.label`
@@ -46,6 +61,10 @@ const Input = styled.input`
   width: 100%;
   padding: 10px;
   margin-bottom: 20px;
+
+  @media only screen and (max-width: 380px) {
+    padding: 8px;
+  }
 `;
 
 const Button = styled.button`
@@ -58,14 +77,24 @@ const Button = styled.button`
   font-weight: bold;
   cursor: pointer;
   display: block;
+
   &:hover {
     background-color: #6699FF; 
+  }
+
+  @media only screen and (max-width: 380px) {
+    width: 100%;
+    padding: 15px;
   }
 `;
 
 const UserInfo = styled.div`
   margin-top: 20px;
   font-weight: bold;
+
+  @media only screen and (max-width: 380px) {
+    font-size: 14px;
+  }
 `;
 
 const Message = styled.div`
@@ -74,6 +103,11 @@ const Message = styled.div`
   padding: 10px;
   text-align: center;
   margin-top: 20px;
+
+  @media only screen and (max-width: 380px) {
+    padding: 8px;
+    margin-top: 15px;
+  }
 `;
 
 const ErrorMessage = styled.div`
@@ -82,6 +116,11 @@ const ErrorMessage = styled.div`
   padding: 10px;
   text-align: center;
   margin-top: 20px;
+
+  @media only screen and (max-width: 380px) {
+    padding: 8px;
+    margin-top: 15px;
+  }
 `;
 
 const UserPage = () => {
@@ -109,7 +148,7 @@ const UserPage = () => {
             headers: { authorization: "Token " + accessToken }
           };
   
-        const response = await axios.get(`http://localhost:3000/users/find/${id}`, config);
+        const response = await axios.get(`https://fancyclothes.onrender.com/users/find/${id}`, config);
         setUser(response.data);
         setName(response.data.name);
         setEmail(response.data.email);
@@ -146,7 +185,7 @@ const UserPage = () => {
         updatedData.password = password;
       }
   
-      await axios.put(`http://localhost:3000/users/${id}`, updatedData, config);
+      await axios.put(`https://fancyclothes.onrender.com/users/${id}`, updatedData, config);
 
       
 

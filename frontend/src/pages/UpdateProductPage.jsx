@@ -21,22 +21,48 @@ const Container = styled.div`
 `;
 
 const Wrapper = styled.div`
-  padding: 30px;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 20px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  
+
+  @media only screen and (min-width: 380px) {
+    padding: 30px;
+    flex-direction: row;
+  }
 `;
 
 const InfoContainer = styled.div`
   flex: 1;
-  padding: 50px;
+  padding: 20px;
   border-radius: 10px;
+  background-color: white;
+  margin-bottom: 20px;
+  text-align: center;
+
+  @media only screen and (min-width: 380px) {
+    margin-bottom: 0px;
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+`;
+
+const ProductInfo = styled.div`
+  margin-top: 20px;
+  font-weight: bold;
 `;
 
 const Title = styled.h1`
   font-weight: bold;
   text-align: center;
   margin-bottom: 20px;
+
+  @media only screen and(max-width: 380px) {
+    font-size: 24px;
+  }
 `;
 
 const Label = styled.label`
@@ -48,26 +74,35 @@ const Input = styled.input`
   width: 100%;
   padding: 10px;
   margin-bottom: 20px;
+  text-align: center;
+
+  @media only screen and (min-width: 380px) {
+    width: 100%;
+  }
 `;
 
 const Button = styled.button`
-  width: 200px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 200px;
   border: none;
-  padding: 20px;
+  padding: 15px;
   background-color: #6666cc;
   color: white;
   font-weight: bold;
   cursor: pointer;
   display: block;
+  margin: 0 auto;
+  margin-top: 20px;
   &:hover {
     background-color: #6699ff;
   }
 `;
 
-const ProductInfo = styled.div`
-  margin-top: 20px;
-  font-weight: bold;
+const ProductImage = styled.img`
+  width: 100%;
+  height: auto;
+  max-width: 200px;
+  margin-bottom: 20px;
 `;
 
 const Message = styled.div`
@@ -100,7 +135,7 @@ const UpdateProductPage = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/products/${id}`);
+        const response = await axios.get(`https://fancyclothes.onrender.com/products/${id}`);
         setProduct(response.data);
         setTitle(response.data.title);
         setSize(response.data.size);
@@ -155,7 +190,7 @@ const UpdateProductPage = () => {
         imgUrl=img
       } 
      
-      await axios.put(`http://localhost:3000/products/${id}`, { title, size, price, img: imgUrl}, config);
+      await axios.put(`https://fancyclothes.onrender.com/products/${id}`, { title, size, price, img: imgUrl}, config);
   
       setSuccessMessage("Product updated successfully!");
     } catch (error) {

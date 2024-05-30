@@ -7,72 +7,97 @@ import { jwtDecode } from "jwt-decode";
 
 const Container = styled.div``;
 const Wrapper = styled.div`
-  padding: 50px;
+  padding: 20px;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  
+  @media only screen and (min-width: 380px) {
+    padding: 50px;
+    flex-direction: row;
+  }
 `;
 const ImgContainer = styled.div`
-  flex: 1;
+  width: 100%;
+  margin-bottom: 20px;
+
+  @media only screen and (min-width: 380px) {
+    width: 50%;
+    margin-bottom: 0px;
+  }
 `;
 const Image = styled.img`
-  width: 450px;
-  height: 450px;
+  width: 100%;
+  height: auto;
+  max-height: 300px;
   object-fit: cover;
+
+  @media only screen and (min-width: 380px) {
+    max-height: 450px;
+  }
 `;
 const InfoContainer = styled.div`
-  flex: 1;
-  padding: 50px 50px;
+  width: 100%;
+
+  @media only screen and (min-width: 380px) {
+    width: 50%;
+    padding: 0px 50px;
+    text-align: left;
+  }
 `;
 const Title = styled.h1`
   font-weight: bold;
+  font-size: 24px;
+  margin-bottom: 10px;
 `;
 const Desc = styled.p`
   margin: 20px 0px;
+  font-size: 16px;
 `;
 const Price = styled.span`
   font-weight: bold;
-  font-size: 25px;
-  padding-bottom: 20px;
-  position: relative;
+  font-size: 20px;
 `;
 const UnavailableMessage = styled.span`
-  position: absolute;
   padding-top: 10px;
-  top: -25px;
-  right: 0;
   font-size: 14px;
   color: red;
 `;
-const Size = styled.h1`
-  font-weight: bold;
-  font-size: 25px;
-  padding-bottom: 20px;
-`;
-const AddedBy = styled.h1`
+const Size = styled.h2`
   font-weight: bold;
   font-size: 20px;
-  padding-bottom: 20px;
+  margin-bottom: 10px;
+`;
+const AddedBy = styled.h2`
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 10px;
 `;
 const AddContainer = styled.div`
-  width: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  width: 100%;
+
+  @media only screen and (min-width: 380px) {
+    width: auto;
+  }
 `;
 const Button = styled.button`
-  width: auto;
-  border: none;
-  padding: 20px 20px;
+  width: 100%;
+  padding: 15px;
   margin-top: 20px;
   background-color: ${props => props.disabled ? '#CCCCCC' : '#6666CC'};
   color: ${props => props.disabled ? '#888888' : 'white'};
   font-weight: bold;
   cursor: pointer;
-  margin-bottom: 10px;
+
+  @media only screen and (min-width: 380px) {
+    width: auto;
+  }
+
   &:hover {
     background-color: ${props => props.disabled ? '#CCCCCC' : '#6699FF'}; 
   }
-
-  `;
+`;
 
 const ProductPage = () => {
   const { id } = useParams();
@@ -89,7 +114,7 @@ const ProductPage = () => {
         const userId = decodedToken.id;
         console.log(userId);
 
-        const response = await axios.post(`http://localhost:3000/cart`, {
+        const response = await axios.post(`https://fancyclothes.onrender.com/cart`, {
           userId: userId,
           productId: product._id, 
         }, {
@@ -104,7 +129,7 @@ const ProductPage = () => {
         
         setInCart(true); 
         
-        await axios.put(`http://localhost:3000/products/${product._id}/inCart`, { inCart: true });
+        await axios.put(`https://fancyclothes.onrender.com/products/${product._id}/inCart`, { inCart: true });
         
         navigate("/products");
       }
@@ -116,7 +141,7 @@ const ProductPage = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/products/${id}`);
+        const response = await axios.get(`https://fancyclothes.onrender.com/products/${id}`);
         setProduct(response.data);
         
         setInCart(response.data.inCart); 
@@ -141,7 +166,7 @@ const ProductPage = () => {
           const config = {
             headers: { authorization: "Token " + accessToken }
           };
-          const response = await axios.get(`http://localhost:3000/users/find/${userId}`, config);
+          const response = await axios.get(`https://fancyclothes.onrender.com/users/find/${userId}`, config);
           setAddedBy(response.data.name);
         } catch (error) {
           console.error("Error fetching user information:", error);

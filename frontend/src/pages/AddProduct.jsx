@@ -23,6 +23,11 @@ const Wrapper = styled.div`
   width: 40%;
   padding: 20px;
   background-color: white;
+  border-radius: 10px;
+
+  @media only screen and (max-width: 380px) {
+    width: 60%;
+   }
 `;
 
 const Title = styled.h1`
@@ -120,7 +125,7 @@ const AddProduct = () => {
       await fileRef.put(img);
       const imageUrl = await fileRef.getDownloadURL();
 
-      const response = await axios.get('http://localhost:3000/labels/generate-labels', {
+      const response = await axios.get('https://fancyclothes.onrender.com/labels/generate-labels', {
         params: { imageUrl }
       });
 
@@ -141,7 +146,7 @@ const AddProduct = () => {
 
       console.log(generatedLabels);
 
-      const response = await axios.post('http://localhost:3000/chatgpt/generate-description', { labels: generatedLabels, title});
+      const response = await axios.post('https://fancyclothes.onrender.com/chatgpt/generate-description', { labels: generatedLabels, title});
 
       console.log("Description response:", response.data);
       setDescription(response.data.description);
@@ -184,7 +189,7 @@ const AddProduct = () => {
       };
 
       
-      const addProductResponse = await axios.post('http://localhost:3000/products/add-product', productData, config);
+      const addProductResponse = await axios.post('https://fancyclothes.onrender.com/products/add-product', productData, config);
 
       if (addProductResponse.status === 200) {
         setAdded(true);

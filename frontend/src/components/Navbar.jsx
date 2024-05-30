@@ -6,12 +6,16 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
 const Container = styled.div`
-  height: 60px;
+  height: 50px;
   border-bottom: 1px solid lightgray;
+
+  @media only screen and (max-width: 380px) {
+    height: 40px;
+  }
 `;
 
 const Wrapper = styled.div`
-  padding: 10px 20px;
+  padding: 5px 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -23,30 +27,15 @@ const Left = styled.div`
   align-items: center;
 `;
 
-const SearchContainer = styled.div`
-  border: 0.5px solid lightgray;
-  display: flex;
-  align-items: center;
-  margin-left: 30px;
-  padding: 8px;
-  width: 350px;
-`;
-
-const Input = styled.input`
-  width: 350px;
-  border: none;
-`;
-
-const Center = styled.div`
-  flex: 1;
-  display: flex;
-  align-items: center;
-`;
-
 const Logo = styled.h1`
   font-weight: bold;
-  margin-left: 10px;
+  margin-left: 5px;
+  font-size: 14px;
   cursor: pointer;
+
+  @media only screen and (max-width: 380px) {
+    font-size: 12px;
+  }
 `;
 
 const Right = styled.div`
@@ -57,22 +46,32 @@ const Right = styled.div`
 `;
 
 const MyMenuItem = styled.div`
-  font-size: 20px;
+  font-size: 14px;
   font-weight: bold;
   cursor: pointer;
-  margin-right: 20px;
+  margin-right: 10px;
+
+  @media only screen and (max-width: 380px) {
+    font-size: 12px;
+    margin-right: 5px;
+  }
+
   &:hover {
     color: darkgrey;
   }
 `;
 
 const UserIconContainer = styled.div`
-  font-size: 30px;
+  font-size: 20px;
   color: #6666cc;
   cursor: pointer;
-  margin-right: 15px;
-  margin-top: 5px;
-  justify-content: center;
+  margin-right: 10px;
+  margin-top: 2px;
+
+  @media only screen and (max-width: 380px) {
+    font-size: 18px;
+    margin-right: 5px;
+  }
 
   &:hover {
     color: darkgrey;
@@ -145,12 +144,6 @@ const Navbar = () => {
             <Logo>FANCY CLOTHES</Logo>
           </NavLink>
         </Left>
-        <Center>
-          <SearchContainer>
-            <Input placeholder="Search" />
-            <Search style={{ color: "gray", fontSize: 16 }} />
-          </SearchContainer>
-        </Center>
         <Right>
           {loggedIn ? (
             <>

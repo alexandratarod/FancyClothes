@@ -23,6 +23,11 @@ const Wrapper = styled.div`
   width: 40%;
   padding: 20px;
   background-color: white;
+  border-radius: 10px;
+
+  @media only screen and (max-width: 380px) {
+    width: 60%;
+   }
   
 `;
 
@@ -107,7 +112,7 @@ const Register = () => {
             return;
         }
         try {
-            const response = await axios.post('http://localhost:3000/auth/register', {
+            const response = await axios.post('https://fancyclothes.onrender.com/auth/register', {
                 name,
                 email,
                 password,

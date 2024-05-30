@@ -37,6 +37,10 @@ const AddProductButton = styled(NavLink)`
   color: #000000;
   font-size: 20px;
   font-weight: bold;
+
+  @media only screen and (max-width: 380px) {
+    font-size:15px;
+   }
 `;
 
 const RightSection = styled.div`
@@ -104,7 +108,7 @@ const ProductsPage = () => {
 
   const fetchMyProducts = (userId) => {
     axios
-      .get(`http://localhost:3000/products/my-products/${userId}`, config)
+      .get(`https://fancyclothes.onrender.com/products/my-products/${userId}`, config)
       .then((response) => {
         setProducts(response.data);
       })
@@ -116,7 +120,7 @@ const ProductsPage = () => {
 
   const fetchAllProducts = () => {
     axios
-      .get("http://localhost:3000/products")
+      .get("https://fancyclothes.onrender.com/products")
       .then((response) => {
         setProducts(response.data);
       })
@@ -129,7 +133,7 @@ const ProductsPage = () => {
   
   const handleDelete = (productId) => {
     axios
-      .delete(`http://localhost:3000/products/${productId}`, config)
+      .delete(`https://fancyclothes.onrender.com/products/${productId}`, config)
       .then(() => {
         if (selectedOption === "My Products" && userId) {
           fetchMyProducts(userId);
