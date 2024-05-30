@@ -109,7 +109,7 @@ const UserPage = () => {
             headers: { authorization: "Token " + accessToken }
           };
   
-        const response = await axios.get(`https://fancyclothes.onrender.com/users/find/${id}`, config);
+        const response = await axios.get(`http://localhost:3000/users/find/${id}`, config);
         setUser(response.data);
         setName(response.data.name);
         setEmail(response.data.email);
@@ -146,7 +146,7 @@ const UserPage = () => {
         updatedData.password = password;
       }
   
-      await axios.put(`https://fancyclothes.onrender.com/users/${id}`, updatedData, config);
+      await axios.put(`http://localhost:3000/users/${id}`, updatedData, config);
 
       
 

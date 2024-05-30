@@ -79,7 +79,7 @@ router.put(
 //verificata
 router.delete(
   "/:id",
-  verifyTokenAndAuthorizationEntity("Order"),
+  
   async (req, res) => {
     try {
       await Order.findByIdAndDelete(req.params.id);

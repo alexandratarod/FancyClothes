@@ -24,8 +24,10 @@ const Wrapper = styled.div`
 `;
 
 const Title = styled.h1`
-  font-weight: 300;
+  font-weight: bold;
   text-align: center;
+  padding-bottom:20px;
+  
 `;
 
 const Bottom = styled.div`
@@ -34,7 +36,10 @@ const Bottom = styled.div`
 `;
 
 const Info = styled.div`
-  flex: 3;
+  flex: 2;
+  background-color: white;
+  border: 0.5px solid lightgray;
+  border-radius: 10px;
 `;
 
 const Product = styled.div`
@@ -48,7 +53,7 @@ const ProductDetail = styled.div`
 `;
 
 const Image = styled.img`
-  width: 200px;
+  width: 217px;
 `;
 
 const Details = styled.div`
@@ -106,7 +111,8 @@ const Summary = styled.div`
   border: 0.5px solid lightgray;
   border-radius: 10px;
   padding: 20px;
-  height: 25vh;
+  height: 40vh;
+  background-color: white;
 `;
 
 const SummaryTitle = styled.h1`
@@ -157,7 +163,7 @@ const Order = () => {
           },
         };
         axios
-          .get(`https://fancyclothes.onrender.com/orders/${orderId}`, config)
+          .get(`http://localhost:3000/orders/${orderId}`, config)
           .then((response) => {
             setOrder(response.data);
           })
@@ -174,7 +180,7 @@ const Order = () => {
           },
         };
         axios
-          .get(`https://fancyclothes.onrender.com/orders/${orderId}/products`, config)
+          .get(`http://localhost:3000/orders/${orderId}/products`, config)
           .then((response) => {
             setProducts(response.data);
           })

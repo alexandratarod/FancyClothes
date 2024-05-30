@@ -29,6 +29,7 @@ router.post("/", verifyToken, async (req, res) => {
 
     const savedCart = await cart.save();
 
+    console.log(savedCart);
     res.status(200).json(savedCart);
   } catch (err) {
     console.error("Error adding product to cart:", err);
@@ -60,18 +61,18 @@ router.put(
 
 //DELETE
 //verificata
-router.delete(
-  "/:id",
-  verifyTokenAndAuthorizationEntity("Cart"),
-  async (req, res) => {
-    try {
-      await Cart.findByIdAndDelete(req.params.id);
-      res.status(200).json("Cart has been deleted...");
-    } catch (err) {
-      res.status(500).json(err);
-    }
-  }
-);
+// router.delete(
+//   "/:id",
+  
+//   async (req, res) => {
+//     try {
+//       await Cart.findByIdAndDelete(req.params.id);
+//       res.status(200).json("Cart has been deleted...");
+//     } catch (err) {
+//       res.status(500).json(err);
+//     }
+//   }
+// );
 
 router.delete(
   "/:userId/:productId",
@@ -97,11 +98,31 @@ router.delete(
   }
 );
 
+router.delete(
+  "/:userId",
+  async (req, res) => {
+    try {
+      const userId = req.params.userId;
+      console.log(userId);
+      const cart = await Cart.findOneAndDelete({ userId: userId });
+
+      if (!cart) {
+        return res.status(404).json({ message: "Cart not found" });
+      }
+
+      res.status(200).json({ message: "Cart has been deleted", cart: cart });
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  }
+);
+
 //GET USER CART -> de vazut aici cu autentificarea
 //verificata
-router.get("/find/:userId", async (req, res) => {
+router.get("/find/:userId", verifyToken, async (req, res) => {
   try {
     const cart = await Cart.findOne({ userId: req.params.userId });
+
     res.status(200).json(cart);
   } catch (err) {
     res.status(500).json(err);

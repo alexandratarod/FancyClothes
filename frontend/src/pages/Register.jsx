@@ -107,7 +107,7 @@ const Register = () => {
             return;
         }
         try {
-            const response = await axios.post('https://fancyclothes.onrender.com/auth/register', {
+            const response = await axios.post('http://localhost:3000/auth/register', {
                 name,
                 email,
                 password,
