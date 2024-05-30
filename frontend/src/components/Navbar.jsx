@@ -133,6 +133,10 @@ const Navbar = () => {
     navigate(`/orders/find/${userId}`);
   };
 
+  const handleMySalesClick = () => {
+    navigate(`/sales/${userId}`);
+  };
+
   return (
     <Container>
       <Wrapper>
@@ -168,7 +172,7 @@ const Navbar = () => {
                 <MenuItem onClick={handleProfileClick}>PROFILE</MenuItem>
                 <MenuItem component={NavLink} to="/products" onClick={handleMenuClose}>PRODUCTS</MenuItem>
                 <MenuItem onClick={handleMyOrdersClick}>MY ORDERS</MenuItem>
-                <MenuItem onClick={handleMenuClose}>MY SALES</MenuItem>
+                <MenuItem onClick={handleMySalesClick}>MY SALES</MenuItem>
                 <MenuItem onClick={handleLogout}>LOGOUT</MenuItem>
               </Menu>
             </>
