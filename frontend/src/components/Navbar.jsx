@@ -30,7 +30,7 @@ const Left = styled.div`
 const Logo = styled.h1`
   font-weight: bold;
   margin-left: 5px;
-  font-size: 14px;
+  font-size: 24px;
   cursor: pointer;
 
   @media only screen and (max-width: 380px) {
@@ -46,7 +46,7 @@ const Right = styled.div`
 `;
 
 const MyMenuItem = styled.div`
-  font-size: 14px;
+  font-size: 20px;
   font-weight: bold;
   cursor: pointer;
   margin-right: 10px;
