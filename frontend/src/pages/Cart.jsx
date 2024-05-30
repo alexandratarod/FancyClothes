@@ -13,6 +13,10 @@ const Container = styled.div``;
 
 const Wrapper = styled.div`
   padding: 20px;
+
+  @media only screen and (max-width: 380px) {
+    padding: 10px;
+   }
 `;
 
 const Title = styled.h1`
@@ -53,20 +57,35 @@ const StyledLink = styled(Link)`
 const Bottom = styled.div`
   display: flex;
   justify-content: space-between;
+
+  @media only screen and (max-width: 380px) {
+    flex-direction:column;
+   }
 `;
 
 const Info = styled.div`
   flex: 3;
+  @media only screen and (max-width: 380px) {
+    flex-direction:column;
+   }
 `;
 
 const Product = styled.div`
   display: flex;
   justify-content: space-between;
+
+  @media only screen and (max-width: 380px) {
+    flex-direction:column;
+   }
 `;
 
 const ProductDetail = styled.div`
   flex: 2;
   display: flex;
+
+  @media only screen and (max-width: 380px) {
+    flex-direction:column;
+   }
 `;
 
 const Image = styled.img`
@@ -79,6 +98,7 @@ const Details = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+
 `;
 
 const ProductName = styled.span``;
@@ -90,11 +110,19 @@ const PriceDetail = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media only screen and (max-width: 380px) {
+    flex-direction:column;
+   }
 `;
 
 const ProductPrice = styled.div`
   font-size: 30px;
   font-weight: 200;
+
+  @media only screen and (max-width: 380px) {
+    margin-bottom:20px;
+   }
 `;
 
 const Hr = styled.hr`
@@ -143,6 +171,9 @@ const DeleteButton = styled.button`
   color: white;
   border: none;
   cursor: pointer;
+
+  
+
 `;
 
 const Cart = () => {
@@ -176,7 +207,7 @@ const Cart = () => {
           console.log(userId);
           
           const response = await axios.get(
-            `http://localhost:3000/cart/find/${userId}`,
+            `https://fancyclothes.onrender.com/cart/find/${userId}`,
             {
               headers: {
                 Authorization: `Bearer ${accessToken}`
@@ -190,7 +221,7 @@ const Cart = () => {
           const productsWithDetails = await Promise.all(
             products.map(async (item) => {
               const productResponse = await axios.get(
-                `http://localhost:3000/products/${item.productId}`
+                `https://fancyclothes.onrender.com/products/${item.productId}`
               );
               return {
                 ...item,
@@ -216,7 +247,7 @@ const Cart = () => {
         const decodedToken = jwtDecode(accessToken);
         const userId = decodedToken.id;
         await axios.delete(
-          `http://localhost:3000/cart/${userId}/${productId}`
+          `https://fancyclothes.onrender.com/cart/${userId}/${productId}`
         );
 
         localStorage.setItem("cartLength", cart.length - 1);
@@ -225,7 +256,7 @@ const Cart = () => {
 
         setInCart(false); 
         
-        await axios.put(`http://localhost:3000/products/${productId}/inCart`, { inCart: false });
+        await axios.put(`https://fancyclothes.onrender.com/products/${productId}/inCart`, { inCart: false });
       }
     } catch (error) {
       console.error("Error deleting product:", error);
@@ -244,9 +275,9 @@ const Cart = () => {
         const decodedToken = jwtDecode(accessToken);
         const userId = decodedToken.id;
   
-        // Plasarea comenzii
+       
         await axios.post(
-          `http://localhost:3000/orders`,
+          `https://fancyclothes.onrender.com/orders`,
           {
             userId: userId,
             products: cart.map(item => ({
@@ -265,12 +296,12 @@ const Cart = () => {
   
         
         await axios.put(
-          `http://localhost:3000/products/purchase/${userId}`, 
+          `https://fancyclothes.onrender.com/products/purchase/${userId}`, 
           { cartItems: cart }
         );
   
        
-        await axios.delete(`http://localhost:3000/cart/${userId}`);
+        await axios.delete(`https://fancyclothes.onrender.com/cart/${userId}`);
   
         
         setCart([]);
@@ -340,7 +371,7 @@ const Cart = () => {
                 $ {(cartTotal + shippingCost).toFixed(2)}
               </SummaryItemPrice>
             </SummaryItem>
-            {/* <Button>CHECKOUT NOW</Button> */}
+           
             <StripeCheckout
               name="Fancy Clothes"
               image=""

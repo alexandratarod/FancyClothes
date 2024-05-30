@@ -32,35 +32,41 @@ const Title = styled.h1`
 
 const Bottom = styled.div`
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+
+  @media only screen and (min-width: 768px) {
+    flex-direction: row;
+  }
 `;
 
 const Info = styled.div`
-  flex: 2;
   background-color: white;
   border: 0.5px solid lightgray;
   border-radius: 10px;
+  margin-bottom: 20px;
 `;
 
 const Product = styled.div`
   display: flex;
   justify-content: space-between;
+  padding: 20px;
 `;
 
 const ProductDetail = styled.div`
   flex: 2;
   display: flex;
+  align-items: center;
 `;
 
 const Image = styled.img`
-  width: 217px;
+  width: 100px;
+  height: auto;
+  margin-right: 20px;
 `;
 
 const Details = styled.div`
-  padding: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
 `;
 
 const ProductName = styled.span``;
@@ -79,57 +85,45 @@ const ProductSize = styled.span``;
 const PriceDetail = styled.div`
   flex: 1;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-`;
-
-const ProductAmountContainer = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-`;
-
-const ProductAmount = styled.div`
-  font-size: 24px;
-  margin: 5px;
+  justify-content: flex-end;
 `;
 
 const ProductPrice = styled.div`
-  font-size: 30px;
-  font-weight: 200;
+  font-size: 18px;
+  font-weight: bold;
 `;
 
 const Hr = styled.hr`
   background-color: #eee;
   border: none;
   height: 1px;
+  margin: 0;
 `;
 
 const Summary = styled.div`
-  flex: 1;
+  background-color: white;
   border: 0.5px solid lightgray;
   border-radius: 10px;
   padding: 20px;
-  height: 40vh;
-  background-color: white;
 `;
 
 const SummaryTitle = styled.h1`
   font-weight: 200;
+  margin-bottom: 20px;
 `;
 
 const SummaryItem = styled.div`
-  margin: 30px 0px;
   display: flex;
   justify-content: space-between;
-  font-weight: ${(props) => props.type === "total" && "500"};
-  font-size: ${(props) => props.type === "total" && "24px"};
+  margin-bottom: 10px;
 `;
 
 const SummaryItemText = styled.span``;
 
-const SummaryItemPrice = styled.span``;
+const SummaryItemPrice = styled.span`
+  font-weight: bold;
+`;
 
 const Order = () => {
   const { id: orderId } = useParams(); // Preluarea id-ului din URL
@@ -163,7 +157,7 @@ const Order = () => {
           },
         };
         axios
-          .get(`http://localhost:3000/orders/${orderId}`, config)
+          .get(`https://fancyclothes.onrender.com/orders/${orderId}`, config)
           .then((response) => {
             setOrder(response.data);
           })
@@ -180,7 +174,7 @@ const Order = () => {
           },
         };
         axios
-          .get(`http://localhost:3000/orders/${orderId}/products`, config)
+          .get(`https://fancyclothes.onrender.com/orders/${orderId}/products`, config)
           .then((response) => {
             setProducts(response.data);
           })
@@ -195,8 +189,6 @@ const Order = () => {
     }
   }, [userId]);
 
-  console.log(order);
-
   return (
     <div>
       <Navbar />
@@ -209,7 +201,7 @@ const Order = () => {
                 <div key={index}>
                   <Product>
                     <ProductDetail>
-                      <Image src={product?.img} />
+                      <Image src={product?.img} alt={product?.title} />
                       <Details>
                         <ProductName>
                           <b>Product:</b> {product?.title}
@@ -234,15 +226,14 @@ const Order = () => {
                 <SummaryItemText>Status</SummaryItemText>
                 <SummaryItemPrice>{order?.status}</SummaryItemPrice>
               </SummaryItem>
-              <SummaryItem type="total">
+              <SummaryItem>
                 <SummaryItemText>Total</SummaryItemText>
-                <SummaryItemPrice>${order?.amount} </SummaryItemPrice>
+                <SummaryItemPrice>${order?.amount}</SummaryItemPrice>
               </SummaryItem>
             </Summary>
           </Bottom>
         </Wrapper>
-      </Container>
-      );
+        </Container>
     </div>
   );
 };

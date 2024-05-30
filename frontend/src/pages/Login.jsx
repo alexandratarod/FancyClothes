@@ -26,6 +26,11 @@ const Wrapper = styled.div`
   width: 25%;
   padding: 20px;
   background-color: white;
+  border-radius: 10px;
+
+  @media only screen and (max-width: 380px) {
+   width: 60%;
+  }
 `;
 
 const Title = styled.h1`
@@ -103,7 +108,7 @@ const Login = () => {
     
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:3000/auth/login", { email, password });
+      const res = await axios.post("https://fancyclothes.onrender.com/auth/login", { email, password });
       const accessToken = res.data.accessToken; 
       localStorage.setItem('accessToken', accessToken); 
       setIsLoggedIn(true); 

@@ -17,7 +17,10 @@ const Container = styled.div`
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  // align-items: center;
+
+  @media only screen and (max-width: 380px) {
+    padding: 10px;
+  }
 `;
 
 const Title = styled.h1`
@@ -25,14 +28,23 @@ const Title = styled.h1`
   align-items: center;
   font-weight: bold;
   text-align: center;
+
+  @media only screen and (max-width: 380px) {
+    font-size: 24px;
+  }
 `;
 
 const StyledTable = styled.table`
   width: 100%;
   border-collapse: collapse;
-  background: white; // fundal alb pentru contrast cu fundalul containerului
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // umbra ușoară pentru un efect de elevație
-  margin-top: 20px; // spațiu deasupra tabelului
+  background: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+
+  @media only screen and (max-width: 380px) {
+    display: block;
+    width: 100%;
+  }
 `;
 
 const StyledTh = styled.th`
@@ -41,11 +53,28 @@ const StyledTh = styled.th`
   font-weight: 500;
   padding: 12px 15px;
   border-bottom: 2px solid #ccc;
+
+  @media only screen and (max-width: 380px) {
+    display: none;
+  }
 `;
 
 const StyledTd = styled.td`
-  padding: 10px 15px;
+  padding: 12px 15px;
   border-bottom: 1px solid #eee;
+  word-wrap: break-word; /* Adaugăm linie nouă pentru a asigura că textul se încadrează pe celulă */
+
+  @media only screen and (max-width: 380px) {
+    display: block;
+    padding: 8px 10px;
+    position: relative;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+    word-wrap: break-word; /* Pentru textul care depășește lățimea celulei */
+    white-space: initial; /* Permite textului să se încadreze pe mai multe linii */
+    text-align: left; /* Alinierea textului pe stânga */
+  }
 `;
 
 const StyledTr = styled.tr`
@@ -53,7 +82,16 @@ const StyledTr = styled.tr`
     background-color: #f9f9f9;
   }
   &:hover {
-    background-color: #f1f1f1; // evidențiază rândul pe care se află cursorul
+    background-color: #f1f1f1;
+  }
+
+  @media only screen and (max-width: 380px) {
+    display: block;
+    margin-bottom: 10px;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 10px;
   }
 `;
 
@@ -68,6 +106,11 @@ const ViewButton = styled.button`
 
   &:hover {
     background-color: #45a049;
+  }
+
+  @media only screen and (max-width: 380px) {
+    padding: 5px 10px;
+    font-size: 14px;
   }
 `;
 
@@ -97,7 +140,7 @@ const MyOrdersPage = () => {
     if (userId) {
       const fetchMyOrders = () => {
         axios
-          .get(`http://localhost:3000/orders/find/${userId}`, config)
+          .get(`https://fancyclothes.onrender.com/orders/find/${userId}`, config)
           .then((response) => {
             setOrders(response.data);
           })
@@ -107,9 +150,9 @@ const MyOrdersPage = () => {
           });
       };
 
-      fetchMyOrders(); // Apelează corect funcția
+      fetchMyOrders();
     }
-  }, [userId]); // Adaugă `userId` în dependențele useEffect pentru a reîncărca datele dacă userId se schimbă
+  }, [userId]);
 
   const handleViewDetails = (orderId) => {
     navigate(`/orders/${orderId}`);
@@ -134,14 +177,12 @@ const MyOrdersPage = () => {
             <tbody>
               {orders.map((order, index) => (
                 <StyledTr key={index}>
-                  <StyledTd>{index + 1}</StyledTd>
-                  <StyledTd>{order.amount}</StyledTd>
-                  <StyledTd>{order.status}</StyledTd>
-                  <StyledTd>{order.createdAt.substring(0, 10)}</StyledTd>
-                  <StyledTd>
-                    <ViewButton onClick={() => handleViewDetails(order._id)}>
-                      View Details
-                    </ViewButton>
+                  <StyledTd data-label="#"> {index + 1} </StyledTd>
+                  <StyledTd data-label="Amount"> {order.amount} </StyledTd>
+                  <StyledTd data-label="Status"> {order.status} </StyledTd>
+                  <StyledTd data-label="Created At"> {order.createdAt.substring(0, 10)} </StyledTd>
+                  <StyledTd data-label="Action">
+                    <ViewButton onClick={() => handleViewDetails(order._id)}>View Details</ViewButton>
                   </StyledTd>
                 </StyledTr>
               ))}

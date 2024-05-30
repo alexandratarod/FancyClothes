@@ -26,110 +26,67 @@ const Wrapper = styled.div`
 const Title = styled.h1`
   font-weight: bold;
   text-align: center;
-  padding-bottom:20px;
-  
-`;
-
-const Bottom = styled.div`
-  display: flex;
-  justify-content: space-between;
+  padding-bottom: 20px;
 `;
 
 const Info = styled.div`
-  flex: 2;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+`;
+
+const ProductCard = styled.div`
   background-color: white;
   border: 0.5px solid lightgray;
   border-radius: 10px;
-`;
-
-const Product = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-
-const ProductDetail = styled.div`
-  flex: 2;
-  display: flex;
-`;
-
-const Image = styled.img`
-  width: 217px;
-`;
-
-const Details = styled.div`
   padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
+  width: 300px;
 `;
 
-const ProductName = styled.span``;
+const ProductImage = styled.img`
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+`;
 
-const ProductId = styled.span``;
+const ProductDetails = styled.div`
+  margin-top: 20px;
+`;
 
-const ProductColor = styled.div`
+const ProductName = styled.div`
+  font-weight: bold;
+`;
+
+const ProductInfo = styled.div`
+  margin-top: 10px;
+`;
+
+const ProductId = styled.span`
+  font-weight: bold;
+`;
+
+const ProductColor = styled.span`
+  display: inline-block;
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background-color: ${(props) => props.color};
+  margin-left: 5px;
 `;
 
-const ProductSize = styled.span``;
-
-const PriceDetail = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+const ProductSize = styled.span`
+  font-weight: bold;
 `;
 
-const ProductAmountContainer = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-`;
-
-const ProductAmount = styled.div`
-  font-size: 24px;
-  margin: 5px;
+const ProductQuantity = styled.span`
+  font-weight: bold;
 `;
 
 const ProductPrice = styled.div`
-  font-size: 30px;
-  font-weight: 200;
+  margin-top: 10px;
+  font-size: 24px;
+  font-weight: bold;
 `;
-
-const Hr = styled.hr`
-  background-color: #eee;
-  border: none;
-  height: 1px;
-`;
-
-const Summary = styled.div`
-  flex: 1;
-  border: 0.5px solid lightgray;
-  border-radius: 10px;
-  padding: 20px;
-  height: 40vh;
-  background-color: white;
-`;
-
-const SummaryTitle = styled.h1`
-  font-weight: 200;
-`;
-
-const SummaryItem = styled.div`
-  margin: 30px 0px;
-  display: flex;
-  justify-content: space-between;
-  font-weight: ${(props) => props.type === "total" && "500"};
-  font-size: ${(props) => props.type === "total" && "24px"};
-`;
-
-const SummaryItemText = styled.span``;
-
-const SummaryItemPrice = styled.span``;
 
 const MySalesPage = () => {
   const { userId } = useParams();
@@ -141,7 +98,7 @@ const MySalesPage = () => {
         const accessToken = localStorage.getItem("accessToken");
         const decodedToken = jwtDecode(accessToken);
         const userId = decodedToken.id;
-        const response = await axios.get(`http://localhost:3000/products/purchased-products/${userId}`);
+        const response = await axios.get(`https://fancyclothes.onrender.com/products/purchased-products/${userId}`);
         setPurchasedProducts(response.data);
         
       } catch (error) {
@@ -153,38 +110,28 @@ const MySalesPage = () => {
     fetchPurchasedProducts();
   }, [userId]);
 
-  console.log(purchasedProducts);
   return (
     <div>
       <Navbar />
       <Container>
         <Wrapper>
           <Title>YOUR SALES</Title>
-          <Bottom>
-            <Info>
-              {purchasedProducts.map((product, index) => (
-                <div key={index}>
-                  <Product>
-                    <ProductDetail>
-                      <Image src={product?.img} />
-                      <Details>
-                        <ProductName>
-                          <b>Product:</b> {product?.title}
-                        </ProductName>
-                        <ProductId>
-                          <b>SIZE:</b> {product?.size}
-                        </ProductId>
-                      </Details>
-                    </ProductDetail>
-                    <PriceDetail>
-                      <ProductPrice>${product?.price}</ProductPrice>
-                    </PriceDetail>
-                  </Product>
-                  {index < purchasedProducts.length - 1 && <Hr />}{" "}
-                </div>
-              ))}
-            </Info>
-          </Bottom>
+          <Info>
+            {purchasedProducts.map((product, index) => (
+              <ProductCard key={index}>
+                <ProductImage src={product?.img} alt={product?.title} />
+                <ProductDetails>
+                  <ProductName>{product?.title}</ProductName>
+                  <ProductInfo>
+                    <ProductSize>
+                      <ProductId>Size:</ProductId> {product?.size}
+                    </ProductSize>
+                  </ProductInfo>
+                  <ProductPrice>${product?.price}</ProductPrice>
+                </ProductDetails>
+              </ProductCard>
+            ))}
+          </Info>
         </Wrapper>
       </Container>
     </div>
